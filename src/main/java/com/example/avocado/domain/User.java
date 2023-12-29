@@ -24,7 +24,7 @@ public class User {
     @Email
     private String username;
     @Column(length = 50, nullable = false, unique = true)
-    private String nickName;
+    private String nickname;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
@@ -33,9 +33,10 @@ public class User {
     private String phone;
     @Column(nullable = false)
     private String role;
-    @Column(nullable = false, length = 1 )
-    @ColumnDefault("1") //회원탈퇴여부(0:탈퇴,1:가입)
-    private String deleteCheck;
+
+//    @Column(columnDefinition = "boolean default true") //회원탈퇴여부(0:탈퇴,1:가입)
+    @Column
+    private Boolean deleteCheck = true;
 
     @CreationTimestamp
     @Column(name = "regDate", updatable = false)
@@ -44,4 +45,10 @@ public class User {
     @UpdateTimestamp
     @Column(name ="modDate" )
     private LocalDateTime modDate;
+
+    //파일==================================================
+    @Column
+    private String filename;
+    @Column
+    private String uuid;
 }

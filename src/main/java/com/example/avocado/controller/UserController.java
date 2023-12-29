@@ -24,8 +24,8 @@ public class UserController {
     }
     @GetMapping("/join")
     public void join(){
-
     }
+
     @PostMapping("/register")
     public String register(User user){
         log.info(user);
