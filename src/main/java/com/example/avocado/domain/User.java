@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,15 +17,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class User {
     @Id
-    @Column(length = 50, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 50, nullable = false, unique = true)
     @Email
-    private String id;
-    @Column(length = 50, nullable = false)
-    private String userName;
-    @Column(length = 50, nullable = false)
+    private String username;
+    @Column(length = 50, nullable = false, unique = true)
     private String nickName;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String name;
     @Column(length = 45, nullable = false)
     private String phone;
     @Column(nullable = false)
@@ -32,11 +37,11 @@ public class User {
     @ColumnDefault("1") //회원탈퇴여부(0:탈퇴,1:가입)
     private String deleteCheck;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "regDate", updatable = false)
     private LocalDateTime regDate;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     @Column(name ="modDate" )
     private LocalDateTime modDate;
 }
