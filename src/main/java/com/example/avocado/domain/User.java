@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder		// DTO -> Entity화
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,11 +45,4 @@ public class User {
     @Column
     private String uuid;
 
-    @CreationTimestamp
-    @Column(name = "regdate", updatable = false, nullable = false)
-    private LocalDateTime regDate;
-
-    @UpdateTimestamp
-    @Column(name ="moddate"  )
-    private LocalDateTime modDate;
 }
