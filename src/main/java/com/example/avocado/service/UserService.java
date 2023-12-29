@@ -1,4 +1,4 @@
 package com.example.avocado.service;
 
-public class Service {
+public interface UserService {
 }

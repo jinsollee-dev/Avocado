@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,14 +37,6 @@ public class User {
 //    @Column(columnDefinition = "boolean default true") //회원탈퇴여부(0:탈퇴,1:가입)
     @Column
     private Boolean deleteCheck = true;
-
-    @CreationTimestamp
-    @Column(name = "regDate", updatable = false)
-    private LocalDateTime regDate;
-
-    @UpdateTimestamp
-    @Column(name ="modDate" )
-    private LocalDateTime modDate;
 
     //파일==================================================
     @Column
