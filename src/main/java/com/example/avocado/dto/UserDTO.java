@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    private Long id;
     @NotEmpty
     @NotBlank(message="이메일(ooo@ooo.ooo) 입력해주세요.")
     @Email(message = "올바른 이메일 주소를 입력해주세요.")
@@ -35,12 +34,6 @@ public class UserDTO {
     @NotEmpty
     private String name;
     private String phone;
-    private String role;
-
-    //    @Column(columnDefinition = "boolean default true") //회원탈퇴여부(0:탈퇴,1:가입)
-    private Boolean deleteCheck = true;
-    private LocalDateTime regDate;
-    private LocalDateTime modDate;
 
     //파일==================================================
     private MultipartFile files;
