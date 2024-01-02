@@ -9667,7 +9667,7 @@ textarea {
   background-size: cover;
   background-position: cnter center;
   background-repeat: no-repeat;
-  background-color: #ffffff; }
+  background-color: #00204a; }
   .hero.overlay {
     position: relative; }
     .hero.overlay:before {
@@ -9679,12 +9679,6 @@ textarea {
       bottom: 0;
       top: 0;
       z-index: 1; }
-
-  .hero, .hero > .container > .row {
-    height: 100px;
-    min-height: 100px;
-    !important;
-  }
   .hero, .hero > .container > .row {
     height: 100vh;
     min-height: 600px; }

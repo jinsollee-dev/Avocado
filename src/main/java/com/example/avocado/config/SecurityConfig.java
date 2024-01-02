@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable())
                 .authorizeHttpRequests(authorizeHttpRequestConfigurer ->authorizeHttpRequestConfigurer
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/","/user/**","/sinup","/layout/home/**").permitAll()
+                        .requestMatchers("/","/user/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
 //                        .requestMatchers("/manager/**").hasAuthority("MANAGER")
                         //.requestMatchers("/board/**").hasAuthority("USER")

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     @GetMapping("/")
     public String home(){
-        return "login_ok";
+
+        return "home";
+
     }
 
     @GetMapping("/list")

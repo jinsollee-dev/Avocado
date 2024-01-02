@@ -1,6 +1,6 @@
 package com.example.avocado.validator;
 
-import com.example.avocado.dto.UserDTO;
+import com.example.avocado.dto.user.UserDTO;
 import com.example.avocado.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

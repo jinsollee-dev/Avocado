@@ -1,0 +1,59 @@
+.heroes {
+    height: 300px;
+    min-height: 150px;
+}
+
+.contain1 {
+    font-family: 'Arial', sans-serif;
+    background: #fff;
+    margin: 0;
+    display: block;
+    align-items: center;
+    height: 150vh;
+
+}
+
+
+.contain2 {
+    text-align: center;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 30px auto;
+    width: 600px;
+
+}
+
+.contain4{
+
+    box-sizing: content-box;
+
+}
+.blog .blog-comments {
+    margin-bottom: 30px;
+
+}
+
+.blog .blog-comments .comments-count {
+    font-weight: bold;
+}
+
+.blog .blog-comments .comment {
+    margin-top: 30px;
+    position: relative;
+}
+
+.blog .blog-comments .comment .comment-img {
+    margin-right: 14px;
+}
+
+.blog .blog-comments .comment .comment-img img {
+    width: 60px;
+}
+.blog .blog-comments .comment h5 {
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+

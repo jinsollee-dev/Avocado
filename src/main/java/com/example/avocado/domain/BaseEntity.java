@@ -17,12 +17,12 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class BaseEntity {
 
-    @CreationTimestamp
-    @Column(name = "regdate", updatable = false, nullable = false)
+    @CreatedDate
+    @Column(name = "regdate", updatable = false)
     private LocalDateTime regDate;
 
-    @UpdateTimestamp
-    @Column(name ="moddate"  )
+    @LastModifiedDate
+    @Column(name="moddate")
     private LocalDateTime modDate;
 
 }

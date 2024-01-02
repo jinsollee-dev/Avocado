@@ -1,4 +1,4 @@
-package com.example.avocado.dto;
+package com.example.avocado.dto.user;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
@@ -36,5 +36,5 @@ public class UserDTO {
     private String phone;
 
     //파일==================================================
-    private MultipartFile files;
+    private MultipartFile file;
 }

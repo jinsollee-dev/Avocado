@@ -1,0 +1,121 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/seller.css}">
+</th:block>
+<div layout:fragment="content">
+    <div class="heroes">
+    </div>
+
+
+    <div class="container">
+        <h3 th:text="|${user.getUsername()}의 정보|"></h3>
+        <div class="contain1">
+            <div class="contain2">
+                <form action="#" method="post" enctype="multipart/form-data">
+
+                    <div class="row">
+
+                            <div class="col mb-3">
+                                <div id="comment-1" class="comment">
+                                    <div class="d-flex">
+                                        <div class="comment-img">
+                                            <img th:src="|${user.getUrl()}|" width="100px" height="100px"></div>
+                                        </div>
+                               </div>
+                            </div>
+
+                            <div class="col mb-3 ">
+                                <div class="lala">
+                                <input type="file" multiple>
+                                </div>
+                            </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                        아이디:
+                        </div>
+                        <div class="col mb-3">
+                            <input
+                                    type="email"
+                                    class="form-control"
+
+
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            비밀번호:
+                        </div>
+                        <div class="col mb-3">
+
+                            <input
+                                    type="password"
+                                    class="form-control"
+
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            이름:
+                        </div>
+                        <div class="col mb-3">
+
+                            <input
+                                    type="text"
+                                    class="form-control"
+
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            닉네임:
+                        </div>
+                        <div class="col mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control"
+
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            휴대폰 번호:
+                        </div>
+                        <div class="col mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control"
+
+                            />
+                        </div>
+                    </div>
+
+
+                    <div class="col">
+                        <input
+                                type="submit"
+                                value="정보수정"
+                                class="btn btn-primary"
+                        />
+                        <button type="button" class="btn btn-dark">회원탈퇴</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+

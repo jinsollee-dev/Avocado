@@ -1,13 +1,15 @@
 package com.example.avocado.controller;
 
-import com.example.avocado.domain.User;
-import com.example.avocado.dto.UserDTO;
+import com.example.avocado.dto.user.UserDTO;
+import com.example.avocado.dto.user.UserResponseDTO;
 import com.example.avocado.repository.UserRepository;
 import com.example.avocado.service.UserService;
 import com.example.avocado.validator.CheckUserValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,30 +39,32 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public void login(){
+    public void login() {
 
     }
+
     @GetMapping("/join")
-    public void join(){
+    public void join() {
     }
 
     /**
      * 회원 가입 post
+     *
      * @param userDTO 회원 정보
      * @return 홈페이지
      */
     @PostMapping("/register")
-    public String register(@Valid UserDTO userDTO, Errors errors , Model model){
+    public String register(@Valid UserDTO userDTO, Errors errors, Model model) {
         log.info(userDTO);
         /*검증*/
-        if( errors.hasErrors()){
+        if (errors.hasErrors()) {
             /* 회원가입 실패 시 입력 데이터 유지 */
             model.addAttribute("dto", userDTO);
 
             /* 유효성 검사를 통과하지 못한 필드와 메세지 핸들링 */
             Map<String, String> validatorResult = userService.validateHandling(errors);
 
-            for(String key : validatorResult.keySet()) {
+            for (String key : validatorResult.keySet()) {
                 model.addAttribute(key, validatorResult.get(key));
                 log.info(key + "/" + validatorResult.get(key));
             }
@@ -77,4 +81,16 @@ public class UserController {
         //repository.save(user);
         return "redirect:/";
     }
+
+
+    @GetMapping("/profile")
+    public void userprofile(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        log.info("===프로필보기");
+        log.info(userDetails);
+        UserResponseDTO userResponseDTO = userService.findUser(userDetails.getUsername());
+        model.addAttribute("user", userResponseDTO );
+        log.info("==사진위치확인");
+        log.info(userResponseDTO.getUrl());
+           }
 }
