@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/loginProcess")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/", true)
                 )//loginForm and login Process setting
 
                 .logout(logoutConfigurer->logoutConfigurer

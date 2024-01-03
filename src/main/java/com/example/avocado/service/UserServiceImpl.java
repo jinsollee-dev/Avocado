@@ -4,6 +4,7 @@ import com.example.avocado.domain.User;
 import com.example.avocado.domain.UserImage;
 import com.example.avocado.dto.user.UserDTO;
 import com.example.avocado.dto.user.UserResponseDTO;
+import com.example.avocado.dto.user.UserUpdateDTO;
 import com.example.avocado.repository.ImageRepository;
 import com.example.avocado.repository.UserRepository;
 import com.example.avocado.service.image.ImageService;
@@ -13,6 +14,7 @@ import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,20 +63,18 @@ public class UserServiceImpl implements UserService{
             log.info("======파일테스트");
             log.info(userDTO.getFile());
 
-
         MultipartFile file = userDTO.getFile();
+        String filename = file.getOriginalFilename();
+        log.info(filename);
 
-        log.info(file);
-
-            if(file == null){
+            if(filename == ""){
                 UserImage image = UserImage.builder()
                         .url("basicprofile.png")
                         .user(user)
                         .build();
 
                 imageRepository.save(image);
-            }
-            if(file != null){
+            } else if (filename != ""){
 
                 UUID uuid = UUID.randomUUID();
                 String imageFileName = uuid + "_" + file.getOriginalFilename();
@@ -85,6 +85,7 @@ public class UserServiceImpl implements UserService{
                     file.transferTo(destinationFile);
 
                     UserImage image = imageRepository.findByUser(user);
+
                     if (image != null) {
                         // 이미지가 이미 존재하면 url 업데이트
                         image.updateUrl(imageFileName);
@@ -133,5 +134,28 @@ public class UserServiceImpl implements UserService{
                 .build();
 
         return result;
+    }
+
+    @Override
+    public void update(String username, UserUpdateDTO userUpdateDTO) {
+        User user = userRepository.findByUsername(username);
+        user.setName(userUpdateDTO.getName());
+        user.setNickname(userUpdateDTO.getNickname());
+        user.setPassword(userUpdateDTO.getPassword());
+        user.setPhone(userUpdateDTO.getPhone());
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public boolean withdrawal(String username, String password) {
+        User user = userRepository.findByUsername(username);
+
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            userRepository.delete(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

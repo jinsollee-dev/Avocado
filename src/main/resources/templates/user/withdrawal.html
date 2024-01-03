@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/seller.css}">
+</th:block>
+<div layout:fragment="content">
+    <div class="heroes">
+    </div>
+
+
+    <div class="container">
+        <h3>탈퇴처리</h3>
+        <div class="contain1">
+            <div class="contain2">
+                <form method="post" action="/user/withdrawal">
+                    <label class="form-label mt-4">회원 탈퇴</label>
+                    <div class="form-floating mb-3" th:if="${wrongPassword == null}">
+                        <input type="password" name="password" class="form-control" id="password" required>
+                        <label for="password">비밀번호</label>
+                    </div>
+                    <div class="form-floating mb-3 has-danger" th:unless="${wrongPassword == null}">
+                        <input type="password" name="password" class="form-control is-invalid"  required>
+                        <label for="password">비밀번호</label>
+                        <div class="invalid-feedback" th:text="${wrongPassword}"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">회원 탈퇴</button>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

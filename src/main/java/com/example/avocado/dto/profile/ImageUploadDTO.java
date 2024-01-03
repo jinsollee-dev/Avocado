@@ -1,4 +1,4 @@
-package com.example.avocado.dto.image;
+package com.example.avocado.dto.profile;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

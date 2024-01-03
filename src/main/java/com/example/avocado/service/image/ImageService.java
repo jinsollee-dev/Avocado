@@ -1,7 +1,7 @@
 package com.example.avocado.service.image;
 
-import com.example.avocado.dto.image.ImageResponseDTO;
-import com.example.avocado.dto.image.ImageUploadDTO;
+import com.example.avocado.dto.profile.ImageResponseDTO;
+import com.example.avocado.dto.profile.ImageUploadDTO;
 
 public interface ImageService {
 

@@ -35,14 +35,14 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String role;
 
+
+
 //    @Column(columnDefinition = "boolean default true") //회원탈퇴여부(0:탈퇴,1:가입)
     @Column
     private Boolean deleteCheck = true;
 
     //파일==================================================
-    @Column
-    private String filename;
-    @Column
-    private String uuid;
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private UserImage userImage;
 
 }

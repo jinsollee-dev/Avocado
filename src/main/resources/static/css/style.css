@@ -9239,7 +9239,6 @@ textarea.form-control-lg {
         padding-right: 20px; }
         .site-nav .site-navigation .site-menu .has-children > a:before {
           position: absolute;
-          content: "\e313";
           font-size: 14px;
           top: 50%;
           right: 0;
@@ -9440,7 +9439,6 @@ textarea.form-control-lg {
         font-size: 14px;
         z-index: 20;
         font-family: "icomoon";
-        content: "\e313";
         position: absolute;
         top: 50%;
         left: 50%;

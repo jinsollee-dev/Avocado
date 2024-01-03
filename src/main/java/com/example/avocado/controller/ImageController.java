@@ -1,7 +1,7 @@
 package com.example.avocado.controller;
 
 
-import com.example.avocado.dto.image.ImageUploadDTO;
+import com.example.avocado.dto.profile.ImageUploadDTO;
 import com.example.avocado.service.image.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

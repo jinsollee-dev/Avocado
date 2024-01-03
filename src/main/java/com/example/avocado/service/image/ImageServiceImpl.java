@@ -3,15 +3,14 @@ package com.example.avocado.service.image;
 
 import com.example.avocado.domain.User;
 import com.example.avocado.domain.UserImage;
-import com.example.avocado.dto.image.ImageResponseDTO;
-import com.example.avocado.dto.image.ImageUploadDTO;
+import com.example.avocado.dto.profile.ImageResponseDTO;
+import com.example.avocado.dto.profile.ImageUploadDTO;
 import com.example.avocado.repository.ImageRepository;
 import com.example.avocado.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

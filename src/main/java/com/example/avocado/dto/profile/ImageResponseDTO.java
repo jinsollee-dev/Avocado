@@ -1,4 +1,4 @@
-package com.example.avocado.dto.image;
+package com.example.avocado.dto.profile;
 
 import lombok.Builder;
 import lombok.Getter;

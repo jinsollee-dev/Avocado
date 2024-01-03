@@ -46,21 +46,21 @@
       .note{
         display: inline-block;
       }
-      .note-num {
-        font-size: 15px;
-        position: absolute;
-        color: azure;
-        top: 0;
-        right: 0;
-        z-index: 3;
-        height: 15px;
-        width: 15px;
-        line-height: 20px;
-        text-align: center;
-        background-color: red;
-        border-radius: 15px;
-        display: inline-block;
-      }
+      /*.note-num {*/
+      /*  font-size: 15px;*/
+      /*  position: absolute;*/
+      /*  color: azure;*/
+      /*  top: 0;*/
+      /*  right: 0;*/
+      /*  z-index: 3;*/
+      /*  height: 15px;*/
+      /*  width: 15px;*/
+      /*  line-height: 20px;*/
+      /*  text-align: center;*/
+      /*  background-color: red;*/
+      /*  border-radius: 15px;*/
+      /*  display: inline-block;*/
+      /*}*/
 
       #notification {
         width : 30px;
@@ -92,36 +92,26 @@
           <!--내비바-->
           <div class="site-navigation">
 
-            <a href="basic.html" class="logo m-0 float-start">
+            <a href="/home" class="logo m-0 float-start">
               <img src="/images/icon/icon-avocado.png" width="50px" height="50px" style="margin-right: 10px;">Avocado</a>
 
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
             >
-              <li class="active"><a href="basic.html">Home</a></li>
-              <li><a href="/board/thistory">거래내역</a></li>
-              <li><a href="about.html">상품등록</a></li>
+              <li class="active"><a href="/home">Home</a></li>
+              <li><a href="#">거래내역</a></li>
+              <li><a href="/product/register">상품등록</a></li>
               <li class="has-children">
-                <a href="properties.html">나의 정보</a>
+                <a href="/user/profile">나의 정보</a>
                 <ul class="dropdown">
-                  <li><a href="#">프로필</a></li>
+                  <li><a href="/user/profile">프로필</a></li>
                   <li><a href="">관심목록</a></li>
                   <li><a href="#">판매내역</a></li>
                   <li><a href="#">구매내역</a></li>
-                  <li><a href="#">로그아웃</a></li>
+                  <li><a href="/logout">로그아웃</a></li>
                 </ul>
               </li>
-              <!--알림-->
-              <li>
-                <div class="note">
-                  <a href="#">
-                  <div id="notification">
-                    <span id="mySpan" class="note-num">3</span>
-                  </div>
-              </a>
-                </div>
 
-              </li>
             </ul>
 
             <a

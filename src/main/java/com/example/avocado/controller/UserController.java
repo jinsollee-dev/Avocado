@@ -2,6 +2,7 @@ package com.example.avocado.controller;
 
 import com.example.avocado.dto.user.UserDTO;
 import com.example.avocado.dto.user.UserResponseDTO;
+import com.example.avocado.dto.user.UserUpdateDTO;
 import com.example.avocado.repository.UserRepository;
 import com.example.avocado.service.UserService;
 import com.example.avocado.validator.CheckUserValidator;
@@ -15,10 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -85,6 +83,8 @@ public class UserController {
 
     @GetMapping("/profile")
     public void userprofile(Model model, Authentication authentication) {
+
+
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         log.info("===프로필보기");
         log.info(userDetails);
@@ -93,4 +93,37 @@ public class UserController {
         log.info("==사진위치확인");
         log.info(userResponseDTO.getUrl());
            }
+
+
+    @PostMapping("/update")
+    public String update(UserUpdateDTO userUpdateDTO, Authentication authentication){
+
+        String password = userUpdateDTO.getPassword();
+        String enPassword = bCryptPasswordEncoder.encode(password);
+        userUpdateDTO.setPassword(enPassword);
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        userService.update(userDetails.getUsername(), userUpdateDTO);
+        return "redirect:/user/profile";
+    }
+
+    @GetMapping("/withdrawal")
+    public void memberWithdrawalForm() {
+
+    }
+
+
+//    회원 탈퇴
+    @PostMapping("/withdrawal")
+    public String memberWithdrawal(@RequestParam String password, Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        boolean result = userService.withdrawal(userDetails.getUsername(), password);
+
+        if (result) {
+            return "redirect:/logout";
+        } else {
+            model.addAttribute("wrongPassword", "비밀번호가 맞지 않습니다.");
+            return "/user/withdrawal";
+        }
+    }
 }
