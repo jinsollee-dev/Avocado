@@ -92,21 +92,21 @@
           <!--내비바-->
           <div class="site-navigation">
 
-            <a href="/home" class="logo m-0 float-start">
+            <a href="/" class="logo m-0 float-start">
               <img src="/images/icon/icon-avocado.png" width="50px" height="50px" style="margin-right: 10px;">Avocado</a>
 
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
             >
-              <li class="active"><a href="/home">Home</a></li>
-              <li><a href="#">거래내역</a></li>
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="/product/thistory">거래내역</a></li>
               <li><a href="/product/register">상품등록</a></li>
               <li class="has-children">
                 <a href="/user/profile">나의 정보</a>
                 <ul class="dropdown">
                   <li><a href="/user/profile">프로필</a></li>
-                  <li><a href="">관심목록</a></li>
-                  <li><a href="#">판매내역</a></li>
+                  <li><a href="#">관심목록</a></li>
+                  <li><a href="/user/sellerinfo">판매내역</a></li>
                   <li><a href="#">구매내역</a></li>
                   <li><a href="/logout">로그아웃</a></li>
                 </ul>
@@ -127,7 +127,7 @@
       </div>
     </nav>
 
-    <div class="container-fluid" layout:fragment="content">
+    <div layout:fragment="content">
       <h3>각 페이지의 content들어갈 곳</h3>
     </div>
 

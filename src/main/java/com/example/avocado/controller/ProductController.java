@@ -6,6 +6,7 @@ import com.example.avocado.domain.User;
 import com.example.avocado.dto.product.ProductDTO;
 import com.example.avocado.service.ProductService;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,7 +29,7 @@ public class ProductController {
   @GetMapping("/register")
   public void register(User user, Model model,
                        @AuthenticationPrincipal PrincipalDetails principalDetails) {
-    model.addAttribute("user", user.getNickname());
+    model.addAttribute("username", principalDetails.getUsername());
     return;
   }
 

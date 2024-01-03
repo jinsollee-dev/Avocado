@@ -1,0 +1,37 @@
+.heroes {
+    height: 57px;
+    min-height: 150px;
+}
+
+
+.contain1 {
+    font-family: 'Arial', sans-serif;
+    background: #fff;
+    margin: 0;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.contain2 {
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 30px auto;
+    width: 600px;
+
+
+}
+
+.contain3 {
+    font-family: 'Arial', sans-serif;
+    background: #fff;
+    margin: 0;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 200vh;
+}

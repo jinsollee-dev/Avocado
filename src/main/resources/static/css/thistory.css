@@ -1,0 +1,114 @@
+.heroes {
+    height: 57px;
+    min-height: 150px;
+}
+
+
+.holecontain {
+
+    flex: 1;
+    padding: 20px;
+}
+
+.customefooter{
+
+    bottom: 0;
+}
+
+
+.contain1 {
+    font-family: 'Arial', sans-serif;
+    background: #fff;
+    margin: 0;
+    display: block;
+    align-items: center;
+    height: 250vh;
+    box-sizing: content-box;
+
+}
+
+
+.contain2 {
+
+    height: 200vh;
+    overflow: auto; /* 내용이 div를 넘어갈 때 스크롤바가 생성됩니다. */
+    border: 1px solid #ccc; /* 테두리 추가 (선택적) */
+    text-align: center;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    width: 600px;
+    box-sizing: content-box;
+}
+
+.comment {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: content-box;
+
+}
+.comment-details {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom:1px solid #ccc;
+}
+.reply-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+.product-img {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.sell-info{
+    display: flex;
+    flex-direction: column;
+}
+.comment-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-author {
+    margin: 0;
+    font-weight: bold;
+}
+
+.comment-content {
+    margin: 5px 0;
+}
+
+.reply{
+    margin-left: 20px; /* 들여쓰기 */
+    /*border-left: 1px solid #ccc;*/
+    padding-left: 10px;
+}
+
+.replyicon{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.myquest{
+    border-bottom:1px solid #ccc;
+    display: block;
+}

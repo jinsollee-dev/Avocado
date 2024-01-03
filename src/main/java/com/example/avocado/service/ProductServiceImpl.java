@@ -3,12 +3,13 @@ package com.example.avocado.service;
 import com.example.avocado.domain.Product;
 import com.example.avocado.domain.ProductImg;
 import com.example.avocado.domain.User;
+import com.example.avocado.dto.product.MainProductDto;
 import com.example.avocado.dto.product.ProductDTO;
-import com.example.avocado.dto.upload.ProductImgResultDTO;
+import com.example.avocado.dto.product.ProductImgResultDTO;
+import com.example.avocado.dto.product.ProductSearchDTO;
 import com.example.avocado.repository.ProductImgRepository;
 import com.example.avocado.repository.ProductRepository;
 import com.example.avocado.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+import java.util.concurrent.atomic.AtomicBoolean;
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -54,16 +57,19 @@ public class ProductServiceImpl implements ProductService {
     User user = userRepository.findByUsername(productDTO.getUsername());
     Product product = modelMapper.map(productDTO, Product.class);
     product.setUser(user);
-    product.setWriter(user.getUsername());
+    product.setWriter(user.getNickname());
     productRepository.save(product);
 
 
+
+    AtomicBoolean isFirstFile = new AtomicBoolean(true);
+
     if (productDTO.getFiles() != null) {
       final List<ProductImgResultDTO> list = new ArrayList<>();
-//            for(int i=0; i<upload.getFiles().size();i++){
-//
-//            }
+
       productDTO.getFiles().forEach(multipartFile -> {
+
+
         String originalFileName = multipartFile.getOriginalFilename();
         log.info(originalFileName);
         //uploadPath=uploadPath+"\\"+getFolder();
@@ -79,15 +85,30 @@ public class ProductServiceImpl implements ProductService {
           e.printStackTrace();
         }
 
-        ProductImg productImg = ProductImg.builder()
-            .filename(filename)
-            .uuid(uuid)
-            .product(product)
-            .build();
+        String imgName = "";
+        String imgUrl = "";
+        imgUrl = "/images/product/" + filename;
 
-        productImgRepository.save(productImg);
+        if (isFirstFile.getAndSet(false)) {
+          // 첫 번째 파일 여부를 판단하고 false로 변경
+          ProductImg productImg = ProductImg.builder()
+                  .filename(filename)
+                  .uuid(uuid)
+                  .imgUrl(imgUrl)
+                  .repimgYn("Y")
+                  .product(product)
+                  .build();
+          productImgRepository.save(productImg);
 
-
+        } else {ProductImg productImg = ProductImg.builder()
+                .filename(filename)
+                .uuid(uuid)
+                .imgUrl(imgUrl)
+                .repimgYn("N")
+                .product(product)
+                .build();
+          productImgRepository.save(productImg);
+        }
         //Long fno=filModeService.register(fileModel);
 
         list.add(new ProductImgResultDTO().builder()
@@ -99,6 +120,12 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+  }
+
+
+  @Transactional(readOnly = true)
+  public Page<MainProductDto> getMainProductPage(ProductSearchDTO productSearchDTO, Pageable pageable){
+    return productRepository.getMainProductPage(productSearchDTO, pageable);
   }
 
 //상품 등록

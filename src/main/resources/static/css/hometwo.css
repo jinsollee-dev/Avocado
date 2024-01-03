@@ -1,0 +1,44 @@
+
+
+
+
+.card-text{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+a:hover{
+    text-decoration:none;
+}
+.center{
+    text-align:center;
+}
+.carousel-item{
+    padding-bottom:60px;
+}
+
+
+html {
+    position: relative;
+    min-height: 100%;
+    margin: 0;
+}
+body {
+    min-height: 100%;
+}
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+}
+.content{
+    margin-bottom:100px;
+    margin-top: 50px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+

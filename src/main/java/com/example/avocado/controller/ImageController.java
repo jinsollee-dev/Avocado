@@ -22,11 +22,16 @@ import java.nio.file.Files;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/image")
+@RequestMapping("/images")
 @Log4j2
 public class ImageController {
+
     @Value("${file.profileImagePath}")
-    private String uploadFolder;
+    private String uploadFolder1;
+
+    @Value("${file.boardImagePath}")
+    private String uploadFolder2;
+
     private final ImageService imageService;
 
 
@@ -40,9 +45,30 @@ public class ImageController {
 
     @GetMapping("/display/{filename}")
     @ResponseBody
-    public ResponseEntity<byte[]> getFile(@PathVariable("filename") String filename){
+    public ResponseEntity<byte[]> getProfile(@PathVariable("filename") String filename){
         log.info("fileName:"+filename);
-        File file = new File(uploadFolder,filename);
+        File file = new File(uploadFolder1,filename);
+        log.info(file);
+
+        ResponseEntity<byte[]> result=null;
+        try{
+            HttpHeaders headers=new HttpHeaders();
+            headers.add("Content-Type", Files.probeContentType(file.toPath()));
+            result=new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),headers,
+                    HttpStatus.OK);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        log.info(result);
+        return result;
+    }
+
+
+    @GetMapping("/product/{filename}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getMainFile(@PathVariable("filename") String filename){
+        log.info("fileName:"+filename);
+        File file = new File(uploadFolder2,filename);
         log.info(file);
 
         ResponseEntity<byte[]> result=null;

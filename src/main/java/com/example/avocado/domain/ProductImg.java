@@ -19,6 +19,7 @@ public class ProductImg extends BaseEntity{
     private String filename;
     private String uuid;
     private String imgUrl;
+    private String repimgYn; //대표 이미지 여부
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "pno")

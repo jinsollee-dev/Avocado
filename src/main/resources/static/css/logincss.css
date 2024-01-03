@@ -1,0 +1,77 @@
+
+.heroes {
+    height: 57px;
+    min-height: 150px;
+}
+
+.contain1 {
+    font-family: 'Arial', sans-serif;
+    background: #fff;
+    margin: 0;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.contain2 {
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 30px auto;
+    width: 600px;
+
+
+}
+
+
+.contain2 h1 {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.input-group input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #ace600;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.input-group input[type="submit"]:hover {
+    background: #45a049;
+}
+
+.switch-link {
+    font-size: 14px;
+    color: #555;
+}

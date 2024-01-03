@@ -15,26 +15,27 @@
             <div class="contain2">
                 <form action="/user/update" method="post" enctype="multipart/form-data">
                     <div class="row">
-                            <div class="col mb-3">
-                                <div id="comment-1" class="comment">
-                                    <div class="d-flex">
-                                        <div class="comment-img">
-                                            <img th:src="|/image/display/${user.getUrl()}|" class="profileimage">
-                                            </div>
-                                        </div>
-                               </div>
-                            </div>
+                        <div class="col mb-3">
+                            <div id="comment-1" class="comment">
+                                <div class="d-flex">
 
-                            <div class="col mb-3 ">
-                                <div class="lala">
-                                <input type="file" multiple>
+                                    <div class="comment-img" id="imagePreview">
+                                        <img th:src="|/images/display/${user.getUrl()}|" class="profileimage">
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="col mb-3 ">
+                            <div class="lala">
+                                <input type="file" id="uploadInput" accept="image/*">
+                            </div>
+                        </div>
 
                     </div>
                     <div class="row">
                         <div class="col">
-                        아이디:
+                            아이디:
                         </div>
                         <div class="col mb-3">
                             <input
@@ -56,7 +57,7 @@
                                     type="password"
                                     class="form-control"
                                     name="password"
-                                    />
+                            />
                         </div>
                     </div>
                     <div class="row">
@@ -107,13 +108,44 @@
                         />
                         <button type="button" class="btn btn-dark">회원탈퇴</button>
                     </div>
-                    </form>
+                </form>
 
 
             </div>
         </div>
     </div>
+
 </div>
+
+
+<script layout:fragment="script" th:inline="javascript">
+        document.getElementById('uploadInput').addEventListener('change', function(event) {
+        const file = event.target.files[0]; // 업로드된 파일 가져오기
+
+        if (file) {
+            const reader = new FileReader(); // 파일을 읽기 위한 FileReader 객체 생성
+
+            // 파일이 로드됐을 때 실행되는 이벤트
+            reader.onload = function(event) {
+                const imgElement = document.createElement('img');
+                imgElement.src = event.target.result;
+                imgElement.style.maxWidth = '150px';
+                imgElement.style.maxHeight = '150px';
+                imgElement.style.borderRadius = '100%';
+
+
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.innerHTML = '';
+                imagePreview.appendChild(imgElement);
+            };
+
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+</script>
+
 
 
 

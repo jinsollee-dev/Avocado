@@ -126,4 +126,8 @@ public class UserController {
             return "/user/withdrawal";
         }
     }
+
+
+    @GetMapping("/sellerinfo")
+    public void sellerinfo(){}
 }

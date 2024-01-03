@@ -38,6 +38,8 @@ public class QProductImg extends EntityPathBase<ProductImg> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
+    public final StringPath repimgYn = createString("repimgYn");
+
     public final StringPath uuid = createString("uuid");
 
     public QProductImg(String variable) {
