@@ -137,6 +137,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserResponseDTO findbyWriter(String writer) {
+        User user = userRepository.findByNickname(writer);
+        UserImage userImage = imageRepository.findByUser(user);
+
+        UserResponseDTO result = UserResponseDTO.builder()
+                .user(user)
+                .userImage(userImage)
+                .build();
+        return result;
+    }
+
+    @Override
     public void update(String username, UserUpdateDTO userUpdateDTO) {
         User user = userRepository.findByUsername(username);
         user.setName(userUpdateDTO.getName());

@@ -10,4 +10,7 @@ public interface ProductRepositoryCustom {
 
        // @QueryProjection 을 이용하여 바로 Dto 객체 반환
     Page<MainProductDto> getMainProductPage(ProductSearchDTO productSearchDTO, Pageable pageable);
+
+
+    public Page<MainProductDto> getSellerProductPage(ProductSearchDTO productSearchDTO, Pageable pageable);
 }

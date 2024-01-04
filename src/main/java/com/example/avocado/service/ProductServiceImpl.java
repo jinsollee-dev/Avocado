@@ -3,10 +3,7 @@ package com.example.avocado.service;
 import com.example.avocado.domain.Product;
 import com.example.avocado.domain.ProductImg;
 import com.example.avocado.domain.User;
-import com.example.avocado.dto.product.MainProductDto;
-import com.example.avocado.dto.product.ProductDTO;
-import com.example.avocado.dto.product.ProductImgResultDTO;
-import com.example.avocado.dto.product.ProductSearchDTO;
+import com.example.avocado.dto.product.*;
 import com.example.avocado.repository.ProductImgRepository;
 import com.example.avocado.repository.ProductRepository;
 import com.example.avocado.repository.UserRepository;
@@ -128,6 +125,11 @@ public class ProductServiceImpl implements ProductService {
     return productRepository.getMainProductPage(productSearchDTO, pageable);
   }
 
+  @Override
+  public Page<MainProductDto> getSellerProductPage(ProductSearchDTO productSearchDTO, Pageable pageable) {
+    return productRepository.getSellerProductPage(productSearchDTO, pageable);
+  }
+
 //상품 등록
 //  @Override
 //  public Long register(ProductDTO productDTO) {
@@ -140,6 +142,28 @@ public class ProductServiceImpl implements ProductService {
 //    return savedProduct.getPno();
 //  }
 
+
+  // 상품 조회
+  @Transactional(readOnly = true)
+  public ProductDTO getProductDetail(Long pno) {
+
+    // 상품 이미지 엔티티들을 productImgDTO 객체로 변환하여 productImgDTOList 에 담음
+    List<ProductImg> productImgList = productImgRepository.findByProductOrderByFnoAsc(pno);
+    List<ProductImgDTO> productImgDTOList= new ArrayList<>();
+
+    for (ProductImg productImg : productImgList) {
+      ProductImgDTO productImgDTO = ProductImgDTO.of(productImg);
+      productImgDTOList.add(productImgDTO);
+    }
+
+    // 상품 이미지 엔티티들을 productImgDTO 객체로 변환하여 productImgDTOList 멤버변수를 초기화
+    Product product = productRepository.findById(pno).get();
+    ProductDTO productDTO = ProductDTO.of(product);
+    productDTO.setProductImgDtoList(productImgDTOList);
+
+    return productDTO;
+
+  }
   @Override
   public List<ProductDTO> getList(Pageable pageable) {
     Page<Product> result = productRepository.findAll(pageable);

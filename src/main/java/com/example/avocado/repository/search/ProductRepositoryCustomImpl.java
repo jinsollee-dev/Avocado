@@ -58,4 +58,39 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         long total = result.getTotal();
         return new PageImpl<>(content, pageable, total);
     }
+
+    private BooleanExpression WriterNameLike(String searchQuery) {
+
+        return StringUtils.isEmpty(searchQuery) ? null : QProduct.product.writer.like("%" + searchQuery + "%");
+    }
+    public Page<MainProductDto> getSellerProductPage(ProductSearchDTO productSearchDTO, Pageable pageable) {
+        QProduct product = QProduct.product;
+        QProductImg productImg = QProductImg.productImg;
+
+        QueryResults<MainProductDto> result = queryFactory
+                .select(
+                        new QMainProductDto(
+                                product.pno,
+                                product.pname,
+                                product.content,
+                                product.price,
+                                product.writer,
+                                productImg.imgUrl
+                        )
+                )
+                .from(productImg)
+                .join(productImg.product, product)
+                .where(productImg.repimgYn.eq("Y"))
+                .where(WriterNameLike(productSearchDTO.getSearchQuery()))
+                .orderBy(product.pno.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+
+        List<MainProductDto> content = result.getResults();
+        long total = result.getTotal();
+        return new PageImpl<>(content, pageable, total);
+    }
+
+
 }

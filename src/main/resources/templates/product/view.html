@@ -18,6 +18,7 @@
     <div class="container">
         <div class="w-75 p-3" style="background-color: #eee; margin: 0 auto">
             <h3>상품 상세보기</h3>
+            <input type="hidden" id="itemId" th:value="${product.pno}">
             <table class="tline table" border="1" width="80%">
                 <tr class="table-light">
                     <td colspan="5">
@@ -32,17 +33,20 @@
                                                 data-bs-slide-to="1" aria-label="Slide 2"></button>
                                         <button type="button" data-bs-target="#carouselExampleIndicators"
                                                 data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                        <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                data-bs-slide-to="4" aria-label="Slide 5"></button>
                                     </div>
                                     <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="/images/img_1.jpg" class="d-block w-100" alt="...">
+
+                                        <div th:each="productImg,iterStat :  ${product.productImgDtoList}" class="carousel-item"
+                                             th:classappend="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                                            <img th:if="${not #strings.isEmpty(productImg.imgUrl)}" th:src="${productImg.imgUrl}"
+                                                 class="d-block w-100" alt="..."
+                                            style="max-widthwidth: 400px; max-height: 400px; overflow: hidden">
                                         </div>
-                                        <div class="carousel-item">
-                                            <img src="/images/img_2.jpg" class="d-block w-100" alt="...">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="/images/img_3.jpg" class="d-block w-100" alt="...">
-                                        </div>
+
                                     </div>
                                     <button class="carousel-control-prev" type="button"
                                             data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -64,7 +68,16 @@
                             <div class="form-group">
                                 <fieldset>
                                     <label class="form-label mt-4" for="readOnlyInput">작성자</label>
-                                    <input class="form-control" id="readOnlyInput" type="text" name="username" readonly="">
+
+                                    <input class="form-control" id="readOnlyInput" type="text"
+                                           name="username" readonly=""
+                                           th:value="${product.writer}">
+
+                                    <a th:href="|@{/user/sellerinfo(searchQuery=${product.writer})}|" class="text-dark">
+<!--                                    <a th:href="'/user/sellerinfo/' +${product.writer}" class="text-dark">-->
+                                    <img src="/images/icon/free-icon-plus-148764.png" width="30px" height="30px">
+                                        판매정보 더보기
+                                    </a>
                                 </fieldset>
                             </div>
                         </td>
@@ -73,7 +86,7 @@
                         <td colspan="5">
                             <div class="form-group">
                                 <label class="col-form-label mt-4" for="inputDefault1">상품명</label>
-                                <input type="text" class="form-control" id="inputDefault1" name="pname">
+                                <input type="text" class="form-control" id="inputDefault1" name="pname"  th:value="${product.pname}" >
                             </div>
                         </td>
                     </tr>
@@ -81,7 +94,7 @@
                         <td colspan="5">
                             <div class="form-group">
                                 <label class="col-form-label mt-4" for="inputDefault2">가격</label>
-                                <input type="text" class="form-control" id="inputDefault2" name="price">
+                                <input type="text" class="form-control" id="inputDefault2" name="price"  th:value="${product.price}">
                             </div>
                         </td>
                     </tr>
@@ -89,13 +102,13 @@
                         <td colspan="2">
                             <div class="form-group">
                                 <label class="col-form-label mt-4" for="inputDefault3">지역</label>
-                                <input type="text" class="form-control" id="inputDefault3" name="price">
+                                <input type="text" class="form-control" id="inputDefault3" name="area" th:value="${product.area}">
                             </div>
                         </td>
                         <td colspan="2">
                             <div class="form-group">
                                 <label class="col-form-label mt-4" for="inputDefault4">희망장소</label>
-                                <input type="text" class="form-control" id="inputDefault4" name="hope_location">
+                                <input type="text" class="form-control" id="inputDefault4" name="hope_location" th:value="${product.hope_location}">
                             </div>
                         </td>
                     </tr>
@@ -114,7 +127,7 @@
                                 <label for="exampleTextarea" class="form-label mt-4">
                                     제품 상세 설명</label>
                                 <textarea class="form-control" id="exampleTextarea" rows="3"
-                                          name="descrition"></textarea>
+                                          name="descrition">[[${product.content}]]</textarea>
                             </div>
                         </td>
                     </tr>

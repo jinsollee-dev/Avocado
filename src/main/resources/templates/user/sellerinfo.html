@@ -23,47 +23,58 @@
                     <div id="comment-1" class="comment">
                         <div class="d-flex">
                             <div class="comment-img">
-                                <img src="/images/profile.png" width="100px" height="100px">
+                                <img th:src="|/images/display/${user.getUrl()}|" class="profileimage">
                             </div>
                             <div>
-                                <h5>NickName님의 페이지</h5>
+                                <h5>[[${writer}]]님의 판매물건</h5>
                             </div>
                         </div>
                         <div>
                             <h5>판매 상품</h5>
                         </div>
                         <div class="contain4">
-                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="0" class="active" aria-current="true"
-                                            aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                </div>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="/images/img_1.jpg" class="d-block w-100" alt="...">
+
+                            <div class="row">
+                                <th:block th:each="product, status: ${products.getContent()}">
+                                    <div class="col-md-4 margin" style="margin-bottom: 30px">
+                                        <div class="card">
+                                            <img th:src="|${product.imgUrl}|" class="card-img-top" th:alt="${product.pname}" height="200" >
+                                                <div class="card-body">
+                                                    <h4 class="card-title">[[${product.pname}]]</h4>
+
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="carousel-item">
-                                        <img src="/images/img_2.jpg" class="d-block w-100" alt="...">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="/images/img_3.jpg" class="d-block w-100" alt="...">
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                                </th:block>
+                            </div>
+
+
+                            <div th:with="start=${(products.number/maxPage)*maxPage + 1},
+    end=(${(products.totalPages == 0) ? 1 : (start + (maxPage - 1) < products.totalPages ? start + (maxPage - 1) : products.totalPages)})">
+                                <ul class="pagination justify-content-center">
+
+                                    <li class="page-product" th:classappend="${products.number eq 0}?'disabled':''">
+                                        <a th:href="@{'/user/sellerinfo' + '?searchQuery=' + ${ProductSearchDto.searchQuery} + '&page=' + ${products.number -1}}"
+                                           aria-label='Previous' class="page-link">
+                                            <span aria-hidden='true'>Previous</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="page-product" th:each="page: ${#numbers.sequence(start, end)}"
+                                        th:classappend="${products.number eq page -1}?'active':''">
+                                        <a th:href="@{'/user/sellerinfo' +'?searchQuery=' + ${ProductSearchDto.searchQuery} + '&page=' + ${page -1}}"
+                                           th:inline="text" class="page-link">[[${page}]]</a>
+                                    </li>
+
+                                    <li class="page-product" th:classappend="${products.number+1 ge products.totalPages}?'disabled':''">
+                                        <a th:href="@{'/user/sellerinfo' +'?searchQuery=' + ${ProductSearchDto.searchQuery} + '&page=' + ${products.number+1}}"
+                                           aria-label='Next' class="page-link">
+                                            <span aria-hidden='true'>Next</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </div>
                         </div>
                     </div>

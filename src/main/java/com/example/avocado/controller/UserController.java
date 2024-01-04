@@ -1,14 +1,21 @@
 package com.example.avocado.controller;
 
+import com.example.avocado.dto.product.MainProductDto;
+import com.example.avocado.dto.product.ProductDTO;
+import com.example.avocado.dto.product.ProductSearchDTO;
 import com.example.avocado.dto.user.UserDTO;
 import com.example.avocado.dto.user.UserResponseDTO;
 import com.example.avocado.dto.user.UserUpdateDTO;
 import com.example.avocado.repository.UserRepository;
+import com.example.avocado.service.ProductService;
 import com.example.avocado.service.UserService;
 import com.example.avocado.validator.CheckUserValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +26,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +37,7 @@ public class UserController {
     private final UserService userService;
     private final CheckUserValidator checkUserValidator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ProductService productService;
 
     /*유효성 검증*/
     @InitBinder
@@ -37,13 +46,10 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public void login() {
-
-    }
+    public void login() {   }
 
     @GetMapping("/join")
-    public void join() {
-    }
+    public void join() {   }
 
     /**
      * 회원 가입 post
@@ -80,23 +86,21 @@ public class UserController {
         return "redirect:/";
     }
 
-
+    //프로필 보기
     @GetMapping("/profile")
     public void userprofile(Model model, Authentication authentication) {
-
-
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         log.info("===프로필보기");
         log.info(userDetails);
         UserResponseDTO userResponseDTO = userService.findUser(userDetails.getUsername());
-        model.addAttribute("user", userResponseDTO );
+        model.addAttribute("user", userResponseDTO);
         log.info("==사진위치확인");
         log.info(userResponseDTO.getUrl());
-           }
+    }
 
-
+    //회원 정보 수정
     @PostMapping("/update")
-    public String update(UserUpdateDTO userUpdateDTO, Authentication authentication){
+    public String update(UserUpdateDTO userUpdateDTO, Authentication authentication) {
 
         String password = userUpdateDTO.getPassword();
         String enPassword = bCryptPasswordEncoder.encode(password);
@@ -108,12 +112,10 @@ public class UserController {
     }
 
     @GetMapping("/withdrawal")
-    public void memberWithdrawalForm() {
-
-    }
+    public void memberWithdrawalForm() {   }
 
 
-//    회원 탈퇴
+    //회원 탈퇴
     @PostMapping("/withdrawal")
     public String memberWithdrawal(@RequestParam String password, Model model, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -127,7 +129,32 @@ public class UserController {
         }
     }
 
-
+    //판매자 정보 보기
     @GetMapping("/sellerinfo")
-    public void sellerinfo(){}
+    public String itemDetail(ProductSearchDTO productSearchDTO,
+                             Optional<Integer> page,
+                             Model model) {
+        log.info("=========이름확인");
+
+        productSearchDTO.setSearchDateType("writer");
+        log.info(productSearchDTO.getSearchQuery());
+
+        log.info(productSearchDTO);
+        String writer = productSearchDTO.getSearchQuery();
+
+        Pageable pageable = PageRequest.of
+                    (page.isPresent() ? page.get() : 0, 6);
+            Page<MainProductDto> products = productService.getSellerProductPage(productSearchDTO, pageable);
+
+            model.addAttribute("products", products);
+             model.addAttribute("ProductSearchDto", productSearchDTO);
+            model.addAttribute("maxPage", 5);
+            model.addAttribute("writer", writer);
+
+        UserResponseDTO userResponseDTO = userService.findbyWriter(writer);
+        model.addAttribute("user", userResponseDTO);
+        log.info("==사진위치확인");
+        log.info(userResponseDTO.getUrl());
+            return  "user/sellerinfo";
+    }
 }

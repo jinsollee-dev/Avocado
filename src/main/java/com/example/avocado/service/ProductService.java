@@ -15,8 +15,14 @@ public interface ProductService {
 
   Long register(ProductDTO productDTO);
 
-  //검색, 페이징 처리한 후 목록 보기
+  //검색, 페이징 처리한 후 홈화면 목록 보기
   Page<MainProductDto> getMainProductPage(ProductSearchDTO productSearchDTO, Pageable pageable);
+
+  //selle 정보 보기
+  Page<MainProductDto> getSellerProductPage(ProductSearchDTO productSearchDTO, Pageable pageable);
+
+  //view 상품 detail
+  public ProductDTO getProductDetail(Long pno);
 
   //목록조회
   List<ProductDTO> getList(Pageable pageable);

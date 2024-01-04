@@ -5,16 +5,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,13 +30,18 @@ public class ProductDTO {
   private String hope_location;
   private String deal_method;
   private String deal_status;
+  private String writer;
   //수정 시 상품 이미지 정보 저장
-  private List<ProductImgDTO> ProductImgDTOList = new ArrayList<>();
+  private List<ProductImgDTO> ProductImgDtoList = new ArrayList<>();
   //상품 이미지 아이디 저장
   private List<Long> productImgFno = new ArrayList<>();
   @JoinColumn(name = "username")
   private String username;
+
   private List<MultipartFile> files;
+
+
+
 
   @Builder
   public ProductDTO(String pname, String content, Long price, String area,
@@ -50,6 +54,15 @@ public class ProductDTO {
     this.deal_method = deal_method;
     this.deal_status = deal_status;
   }
+
+  private static ModelMapper modelMapper = new ModelMapper();
+
+
+  // Entity -> DTO
+  public static ProductDTO of(Product prodcut){
+    return modelMapper.map(prodcut, ProductDTO.class);
+  }
+
 
   public Product toEntity(ProductDTO dto) {
     Product entity = Product.builder()

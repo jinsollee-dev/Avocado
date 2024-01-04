@@ -14,6 +14,8 @@ public interface UserService {
 
     UserResponseDTO findUser(String username);
 
+    UserResponseDTO findbyWriter(String writer);
+
    void update (String username, UserUpdateDTO userUpdateDTO);
 
     boolean withdrawal(String username, String password);
