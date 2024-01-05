@@ -65,7 +65,9 @@
       <th:block th:each="product, status: ${products.getContent()}">
         <div class="col-md-4 margin" style="margin-bottom: 30px">
           <div class="card">
-            <a th:href="'/product/' +${product.pno}" class="text-dark">
+<!--            th:href="'/product/' +${product.pno}"-->
+
+            <a th:href="|/product/${product.pno}|" class="text-dark">
               <img th:src="|${product.imgUrl}|" class="card-img-top" th:alt="${product.pname}" height="300">
               <div class="card-body">
                 <h4 class="card-title">[[${product.pname}]]</h4>

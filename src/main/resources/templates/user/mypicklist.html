@@ -1,0 +1,69 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/seller.css}">
+</th:block>
+<div layout:fragment="content">
+    <div class="heroes">
+    </div>
+
+
+    <div class="container">
+        <h3> 판매자정보</h3>
+        <div class="contain1">
+            <div class="contain2">
+                <div class="blog-comments">
+                    <div id="comment-1" class="comment">
+                        <div class="d-flex">
+                            <div class="comment-img">
+<!--                                <img th:src="|/images/display/${user.getUrl()}|" class="profileimage">-->
+                            </div>
+                            <div>
+                                <h5>님의 관심목록</h5>
+                            </div>
+                        </div>
+                        <div>
+                            <h5>판매 상품</h5>
+                        </div>
+                        <div class="contain4">
+
+                            <div class="row">
+                                <th:block th:each="product, status: ${cartItems}">
+                                    <div class="col-md-4 margin" style="margin-bottom: 30px">
+                                        <div class="card">
+                                            <img th:src="|${product.imgUrl}|" class="card-img-top"  height="200" >
+                                                <div class="card-body">
+                                                    <h4 class="card-title">[[${product.itemName}]]</h4>
+                                                    <p class="card-title">[[${product.price}]]</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+
+
+
+

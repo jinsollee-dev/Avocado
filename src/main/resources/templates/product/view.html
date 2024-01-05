@@ -3,6 +3,7 @@
       layout:decorate="~{layout/basic.html}">
 
 
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -18,6 +19,7 @@
     <div class="container">
         <div class="w-75 p-3" style="background-color: #eee; margin: 0 auto">
             <h3>상품 상세보기</h3>
+            <input type="hidden" id="cartitemId" th:value="${cartitemId}">
             <input type="hidden" id="itemId" th:value="${product.pno}">
             <table class="tline table" border="1" width="80%">
                 <tr class="table-light">
@@ -133,9 +135,16 @@
                     </tr>
                 <tr class="table-light">
                     <td colspan="2" class="justify-content-center" style="text-align: right">
-                        <div class="form-group">
-                            <img id="myImage"  src="/images/icon/like_off.png" onclick="changeImage()">
+                        <div id="mypick">
+                        <div id="on" th:if="${mypick} != null"  >
+                           <img id= "myImage2" src="/images/icon/like_on.png" onclick="deleteCartItem()" >
                         </div>
+
+                        <div id="off" th:if="${mypick} == null" >
+                          <img id ="myImage" src="/images/icon/like_off.png"  onclick="addCart()">
+                        </div>
+                        </div>
+
                         </td>
                     <td colspan="2" class="justify-content-center">
                         <button type="button" class="btn btn-info">문의하기</button>
@@ -161,15 +170,101 @@
         crossorigin="anonymous"></script>
 
 <script layout:fragment="script" th:inline="javascript">
-    function changeImage() {
-        var image = document.getElementById('myImage');
+
+       function toggleDivs() {
+        var onDiv = document.getElementById('on');
+        var offDiv = document.getElementById('off');
+
+        if (onDiv.style.display !== 'none') {
+            onDiv.style.display = 'none';
+            offDiv.style.display = 'block';
+
+        } else if(onDiv.style.display === 'none') {
+            onDiv.style.display = 'block';
+            offDiv.style.display = 'none';
+        }
+
+    }
+
+    function changeImage1() {
+             var image = document.getElementById('myImage');
+
+
         if (image.src.match("/images/icon/like_off.png")) {
             image.src = "/images/icon/like_on.png";
-        } else {
-            image.src = "/images/icon/like_off.png";
+            addCart();
         }
     }
 
+    function changeImage2() {
+        var image2 = document.getElementById('myImage2');
+
+        if (image2.src.match("/images/icon/like_on.png")) {
+            image2.src = "/images/icon/like_off.png";
+            deleteCartItem();
+        }
+    }
+
+      function addCart(){
+        var url = "/cart";
+
+        var paramData = {
+            itemId : $("#itemId").val()};
+
+        var param = JSON.stringify(paramData);
+
+
+    $.ajax({
+            url      : url,
+            type     : "POST",
+            contentType : "application/json",
+            data     : param,
+            dataType : "json",
+            cache   : false,
+            success  : function(result, status){
+                alert('좋아요 등록완료');
+                var str = "<img id= \"myImage2\" src=\"/images/icon/like_on.png\" onClick=\"deleteCartItem()\" >"
+
+                $("#mypick").html("")
+                $("#mypick").html(str)
+
+
+            },
+            error : function(status, error){
+                    alert('로그인 후 이용해주세요');
+                    location.href='/user/login';
+                      }
+        });
+
+    }
+
+    // 장바구니 삭제 요청
+    function deleteCartItem(){
+        var cartItemId = $("#cartitemId").val();
+        var pno = $("#itemId").val();
+        var url = "/cartItem/" + cartItemId;
+
+        $.ajax({
+            url      : url,
+            type     : "DELETE",
+            dataType : "json",
+            cache   : false,
+            success  : function(result, status){
+
+             alert('좋아요 삭제완료');
+
+                var str = "<img id= \"myImage\" src=\"/images/icon/like_off.png\" onClick=\"addCart()\" >"
+
+                $("#mypick").html("")
+                $("#mypick").html(str)
+
+                // location.href='/product/' + pno ;
+            },
+            error : function(status, error){
+                alert("오류")
+                }
+        });
+    }
 </script>
 
 
