@@ -7,9 +7,11 @@ import com.example.avocado.dto.product.*;
 import com.example.avocado.repository.ProductImgRepository;
 import com.example.avocado.repository.ProductRepository;
 import com.example.avocado.repository.UserRepository;
+import com.example.avocado.service.image.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
+import org.hibernate.query.sqm.EntityTypeException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,7 @@ public class ProductServiceImpl implements ProductService {
   private final ProductRepository productRepository;
   private final ProductImgRepository productImgRepository;
   private final ModelMapper modelMapper;
+  private final ImageService imageService;
 
   @Override
   public Long register(ProductDTO productDTO) {
@@ -54,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
     User user = userRepository.findByUsername(productDTO.getUsername());
     Product product = modelMapper.map(productDTO, Product.class);
     product.setUser(user);
+    product.setDealstatus("판매중");
     product.setWriter(user.getNickname());
     productRepository.save(product);
 
@@ -182,21 +186,43 @@ public class ProductServiceImpl implements ProductService {
     return productDTO;
   }
 
-  @Override
-  public Long modify(ProductDTO productDTO) {
-    Optional<Product> result = productRepository.findById(productDTO.getPno());
-    Product product = result.orElseThrow();
-    product.change(productDTO.getPname(), productDTO.getContent(), productDTO.getPrice(),
-        productDTO.getArea(), productDTO.getHope_location());
-    Long pno = productRepository.save(product).getPno();
-    return pno;
+
+
+  // 상품 수정
+  public void updateProduct(ProductDTO productDTO) {
+
+    // 상품 수정
+    Product product = productRepository.findByPno(productDTO.getPno());
+    log.info("확인2222");
+    log.info(product.getPno());
+    product.change(productDTO);
+    productRepository.save(product);
+
+    // 상품 이미지 수정
+    AtomicBoolean isFirstFile = new AtomicBoolean(true);
+
+    List<ProductImg> productImgList = productImgRepository.findByFnobypno(product.getPno());
+
+
+    for (int i = 0; i < productImgList.size(); i++) {
+      imageService.updateProductImg(productImgList.get(i), productDTO.getFiles().get(i));
+    }
+
+
+  }
+
+
+  public void updatedealstatus(Long pno){
+    Product product = productRepository.findByPno(pno);
+    product.setDealstatus("판매완료");
+    productRepository.save(product);
+
   }
 
   @Override
   public void remove(Long pno) {
-    productRepository.deleteById(pno);
+
   }
 
 
 }
-

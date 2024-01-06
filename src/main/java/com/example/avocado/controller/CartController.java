@@ -41,7 +41,15 @@ public class CartController {
         }
 
         Long cartItemId;
+        List<CartListDto> cartListDtos = cartService.getCartList(principal.getName());
 
+
+//        for (CartListDto cartitem : cartListDtos) {
+//            if (cartitem.getPno() == pno) {
+//                model.addAttribute("mypick", pno);
+//                model.addAttribute("cartitemId", cartitem.getCartItemId());
+//            }
+//        }
         try {
             cartItemId = cartService.addCart(cartItemDto, principal.getName());
         } catch (Exception e) {

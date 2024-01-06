@@ -42,7 +42,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                                 product.content,
                                 product.price,
                                 product.writer,
-                                productImg.imgUrl
+                                productImg.imgUrl,
+                                product.dealstatus
                                 )
                 )
                 .from(productImg)
@@ -75,7 +76,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                                 product.content,
                                 product.price,
                                 product.writer,
-                                productImg.imgUrl
+                                productImg.imgUrl,
+                                product.dealstatus
                         )
                 )
                 .from(productImg)

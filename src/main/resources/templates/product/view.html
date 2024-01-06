@@ -110,7 +110,7 @@
                         <td colspan="2">
                             <div class="form-group">
                                 <label class="col-form-label mt-4" for="inputDefault4">희망장소</label>
-                                <input type="text" class="form-control" id="inputDefault4" name="hope_location" th:value="${product.hope_location}">
+                                <input type="text" class="form-control" id="inputDefault4" name="hopelocation" th:value="${product.hopelocation}">
                             </div>
                         </td>
                     </tr>
@@ -118,8 +118,8 @@
                         <td colspan="5">
                             <div class="form-group">
                                 <label class="col-form-label mt-4">거래방식</label>
-                                <input type="radio"  name="deal_method" value="유상" checked>유상
-                                <input type="radio"  name="deal_method" value="나눔">나눔
+                                <input type="radio"  name="dealmethod" value="유상" checked>유상
+                                <input type="radio"  name="dealmethod" value="나눔">나눔
                             </div>
                         </td>
                     </tr>
@@ -152,14 +152,18 @@
                     </td>
                  </table>
 
-                <table class="table table-hover" border="1" width="80%">
-                    <tr class="table-light">
-                        <td align="right">
+            <table class="table table-hover" border="1" width="80%">
+                <tr class="table-light">
+                    <td align="right">
+                        <a th:href="|@{/product/modify(pno=${product.pno})}|" class="text-decoration-none">
                             <button type="submit" class="btn btn-dark">수정</button>
+                        </a>
+                        <a th:href="|@{/product/remove(pno=${product.pno})}|" class="text-decoration-none">
                             <button type="submit" class="btn btn-danger">삭제</button>
-                        </td>
-                    </tr>
-                </table>
+                        </a>
+                    </td>
+                </tr>
+            </table>
 
             </div>
     </div>
@@ -225,8 +229,8 @@
                 alert('좋아요 등록완료');
                 var str = "<img id= \"myImage2\" src=\"/images/icon/like_on.png\" onClick=\"deleteCartItem()\" >"
 
-                $("#mypick").html("")
-                $("#mypick").html(str)
+                $("#on").html("")
+                $("#on").html(str)
 
 
             },
@@ -255,8 +259,8 @@
 
                 var str = "<img id= \"myImage\" src=\"/images/icon/like_off.png\" onClick=\"addCart()\" >"
 
-                $("#mypick").html("")
-                $("#mypick").html(str)
+                $("#off").html("")
+                $("#off").html(str)
 
                 // location.href='/product/' + pno ;
             },

@@ -14,15 +14,17 @@ public class MainProductDto{
     private Long price;
     private String writer;
     private String imgUrl;
+    private String dealstatus;
 
     @QueryProjection
     public MainProductDto(Long pno, String pname, String content,
-                       Long price, String writer,String imgUrl) {
+                       Long price, String writer,String imgUrl, String dealstatus) {
         this.pno = pno;
         this.pname = pname;
         this.content = content;
         this.price = price;
         this.writer = writer;
         this.imgUrl = imgUrl;
+        this.dealstatus = dealstatus;
             }
 }

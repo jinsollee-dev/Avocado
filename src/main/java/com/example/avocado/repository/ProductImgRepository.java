@@ -13,4 +13,7 @@ public interface ProductImgRepository extends JpaRepository<ProductImg, Long> {
 
   @Query("select p from ProductImg p where p.product.pno=:pno order by p.product.pno")
   List<ProductImg> findByProductOrderByFnoAsc(Long pno);
+
+  @Query("select p from ProductImg p where p.product.pno=:pno")
+  List<ProductImg> findByFnobypno(Long pno);
 }

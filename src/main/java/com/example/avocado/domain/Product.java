@@ -1,5 +1,6 @@
 package com.example.avocado.domain;
 
+import com.example.avocado.dto.product.ProductDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,11 +25,11 @@ public class Product extends BaseEntity{
   @Column(length = 200, nullable = false)
   private String area;
   @Column(length = 200)
-  private String hope_location;
+  private String hopelocation;
   @Column(nullable = false)
-  private String deal_method;
+  private String dealmethod;
   @Column(length = 45)
-  private String deal_status;
+  private String dealstatus;
 
   private String writer;
 
@@ -36,11 +37,11 @@ public class Product extends BaseEntity{
   @JoinColumn(name = "username")
   private User user;
 
-  public void change(String pname, String content, Long price, String area, String hope_location) {
-    this.pname = pname;
-    this.content = content;
-    this.price = price;
-    this.area = area;
-    this.hope_location = hope_location;
+  public void change(ProductDTO productDTO) {
+    this.pname = productDTO.getPname();
+    this.content = productDTO.getContent();
+    this.price = productDTO.getPrice();
+    this.area = productDTO.getArea();
+    this.hopelocation = productDTO.getHopelocation();
   }
 }

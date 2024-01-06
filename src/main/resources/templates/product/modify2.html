@@ -1,0 +1,168 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/seller.css}">
+</th:block>
+<div layout:fragment="content">
+    <div class="heroes">
+    </div>
+
+
+    <div class="container">
+        <div class="w-75 p-3" style="background-color: #eee; margin: 0 auto">
+            <h3>상품 상세보기</h3>
+            <form method="post" enctype="multipart/form-data" action="/product/modify">
+                <input type="hidden" name="pno" th:value="${productDTO.pno}">
+                <table class="tline table" border="1" width="80%">
+                    <tr class="table-light">
+                        <td colspan="5">
+                            <div class="form-group">
+                                <div class="contain4" style="width: 60%; height: 60%; margin: 0 auto">
+                                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                    data-bs-slide-to="0" class="active" aria-current="true"
+                                                    aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                    data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                    data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="/images/img_1.jpg" class="d-block w-100" alt="...">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="/images/img_2.jpg" class="d-block w-100" alt="...">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="/images/img_3.jpg" class="d-block w-100" alt="...">
+                                            </div>
+                                        </div>
+                                        <button class="carousel-control-prev" type="button"
+                                                data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button"
+                                                data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td colspan="5">
+                            <div class="form-group">
+                                <fieldset>
+                                    <label class="form-label mt-4" for="readOnlyInput">작성자</label>
+                                    <input class="form-control" id="readOnlyInput" type="text" name="username"
+                                           th:value="${productDTO.username}" readonly="">
+                                </fieldset>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td colspan="5">
+                            <div class="form-group">
+                                <label class="col-form-label mt-4" for="inputDefault1">상품명</label>
+                                <input type="text" class="form-control" id="inputDefault1" name="pname"
+                                       th:value="${productDTO.pname}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td colspan="5">
+                            <div class="form-group">
+                                <label class="col-form-label mt-4" for="inputDefault2">가격</label>
+                                <input type="text" class="form-control" id="inputDefault2" name="price"
+                                       th:value="${productDTO.price}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td colspan="2">
+                            <div class="form-group">
+                                <label class="col-form-label mt-4" for="inputDefault3">지역</label>
+                                <input type="text" class="form-control" id="inputDefault3" name="area"
+                                       th:value="${productDTO.area}">
+                            </div>
+                        </td>
+                        <td colspan="2">
+                            <div class="form-group">
+                                <label class="col-form-label mt-4" for="inputDefault4">희망장소</label>
+                                <input type="text" class="form-control" id="inputDefault4" name="hopelocation"
+                                       th:value="${productDTO.hopelocation}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td colspan="5">
+                            <div class="form-group">
+                                <label class="col-form-label mt-4">거래방식</label>
+                                <input type="radio" name="dealmethod" value="유상" checked>유상
+                                <input type="radio" name="dealmethod" value="나눔">나눔
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td colspan="5">
+                            <div class="form-group">
+                                <label for="exampleTextarea" class="form-label mt-4">
+                                    제품 상세 설명</label>
+                                <textarea class="form-control" id="exampleTextarea" rows="3"
+                                          name="content">[[${productDTO.content}]]{</textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td colspan="2" class="justify-content-center" style="text-align: right">
+                            <div class="form-group">
+                                <img id="myImage" src="/images/like_off.png" onclick="changeImage()">
+                            </div>
+                        </td>
+                </table>
+
+                <table class="table table-hover" border="1" width="80%">
+                    <tr class="table-light">
+                        <td align="right">
+
+                                <button type="submit" class="btn btn-dark">저장</button>
+
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script layout:fragment="script" th:inline="javascript">
+    function changeImage() {
+        var image = document.getElementById('myImage');
+        if (image.src.match("/images/like_off.png")) {
+            image.src = "/images/like_on.png";
+        } else {
+            image.src = "/images/like_off.png";
+        }
+    }
+
+</script>
+
+
+
+

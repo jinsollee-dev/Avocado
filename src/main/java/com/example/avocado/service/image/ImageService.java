@@ -1,7 +1,9 @@
 package com.example.avocado.service.image;
 
+import com.example.avocado.domain.ProductImg;
 import com.example.avocado.dto.profile.ImageResponseDTO;
 import com.example.avocado.dto.profile.ImageUploadDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
 
@@ -18,4 +20,7 @@ public interface ImageService {
      * @return 이미지 url
      */
     ImageResponseDTO findImage(String username);
+
+
+ void updateProductImg(ProductImg productImg, MultipartFile itemImgFile);
 }

@@ -157,4 +157,37 @@ public class UserController {
         log.info(userResponseDTO.getUrl());
             return  "user/sellerinfo";
     }
+
+
+    @GetMapping("/deal")
+    public String itemDetaildeal(ProductSearchDTO productSearchDTO,
+                                Optional<Integer> page,
+                                Model model,
+                                 Authentication authentication) {
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserResponseDTO userResponseDTO = userService.findUser(userDetails.getUsername());
+        String writer = userResponseDTO.getNickname();
+
+        productSearchDTO.setSearchDateType(writer);
+        log.info(productSearchDTO.getSearchQuery());
+
+        log.info(productSearchDTO);
+
+
+        Pageable pageable = PageRequest.of
+                (page.isPresent() ? page.get() : 0, 6);
+        Page<MainProductDto> products = productService.getSellerProductPage(productSearchDTO, pageable);
+
+        model.addAttribute("products", products);
+        model.addAttribute("ProductSearchDto", productSearchDTO);
+        model.addAttribute("maxPage", 5);
+        model.addAttribute("writer", writer);
+
+
+        model.addAttribute("user", userResponseDTO);
+        log.info("==사진위치확인");
+        log.info(userResponseDTO.getUrl());
+        return  "user/deal";
+    }
 }

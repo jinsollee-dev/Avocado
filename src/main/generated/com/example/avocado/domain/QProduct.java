@@ -28,11 +28,11 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final StringPath content = createString("content");
 
-    public final StringPath deal_method = createString("deal_method");
+    public final StringPath dealmethod = createString("dealmethod");
 
-    public final StringPath deal_status = createString("deal_status");
+    public final StringPath dealstatus = createString("dealstatus");
 
-    public final StringPath hope_location = createString("hope_location");
+    public final StringPath hopelocation = createString("hopelocation");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modDate = _super.modDate;

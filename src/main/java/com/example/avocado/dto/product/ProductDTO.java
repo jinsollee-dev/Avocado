@@ -27,14 +27,19 @@ public class ProductDTO {
   @NotNull(message = "가격은 필수 입력 값입니다.")
   private Long price;
   private String area;
-  private String hope_location;
-  private String deal_method;
-  private String deal_status;
+  private String hopelocation;
+  private String dealmethod;
+  private String dealstatus;
   private String writer;
+
+
+
   //수정 시 상품 이미지 정보 저장
   private List<ProductImgDTO> ProductImgDtoList = new ArrayList<>();
   //상품 이미지 아이디 저장
   private List<Long> productImgFno = new ArrayList<>();
+
+
   @JoinColumn(name = "username")
   private String username;
 
@@ -45,14 +50,14 @@ public class ProductDTO {
 
   @Builder
   public ProductDTO(String pname, String content, Long price, String area,
-                    String hope_location, String deal_method, String deal_status) {
+                    String hopelocation, String dealmethod, String dealstatus) {
     this.pname = pname;
     this.content = content;
     this.price = price;
     this.area = area;
-    this.hope_location = hope_location;
-    this.deal_method = deal_method;
-    this.deal_status = deal_status;
+    this.hopelocation = hopelocation;
+    this.dealmethod = dealmethod;
+    this.dealstatus = dealstatus;
   }
 
   private static ModelMapper modelMapper = new ModelMapper();
@@ -64,16 +69,16 @@ public class ProductDTO {
   }
 
 
-  public Product toEntity(ProductDTO dto) {
-    Product entity = Product.builder()
-        .pname(dto.pname)
-        .content(dto.content)
-        .price(dto.price)
-        .area(dto.area)
-        .hope_location(dto.hope_location)
-        .deal_method(dto.deal_method)
-        .deal_status(dto.deal_status)
-        .build();
-    return entity;
-  }
+//  public Product toEntity(ProductDTO dto) {
+//    Product entity = Product.builder()
+//        .pname(dto.pname)
+//        .content(dto.content)
+//        .price(dto.price)
+//        .area(dto.area)
+//        .hopelocation(dto.hopelocation)
+//        .dealmethod(dto.dealmethod)
+//        .dealstatus(dto.dealstatus)
+//        .build();
+//    return entity;
+//  }
 }

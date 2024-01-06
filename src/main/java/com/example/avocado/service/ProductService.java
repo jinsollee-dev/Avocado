@@ -6,6 +6,7 @@ import com.example.avocado.dto.product.ProductDTO;
 import com.example.avocado.dto.product.ProductSearchDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,10 +30,10 @@ public interface ProductService {
 
   ProductDTO getProduct(Long pno);
 
-  Long modify(ProductDTO productDTO);
-
+   void updateProduct(ProductDTO productDTO);
   void remove(Long pno);
 
+  void updatedealstatus(Long pno);
 
   //  //dto->entity
 //  default Product dtoToEntity(ProductDTO productDTO) {
@@ -42,9 +43,9 @@ public interface ProductService {
 //        .content(productDTO.getContent())
 //        .price(productDTO.getPrice())
 //        .area(productDTO.getArea())
-//        .hope_location(productDTO.getHope_location())
-//        .deal_method(productDTO.getDeal_method())
-//        .deal_status(productDTO.getDeal_status())
+//        .hopelocation(productDTO.gethopelocation())
+//        .dealmethod(productDTO.getdealmethod())
+//        .dealstatus(productDTO.getdealstatus())
 //        .id(user)
 //        .build();
 //    return product;
@@ -58,9 +59,9 @@ public interface ProductService {
 //        .content(product.getContent())
 //        .price(product.getPrice())
 //        .area(product.getArea())
-//        .hope_location(product.getHope_location())
-//        .deal_method(product.getDeal_method())
-//        .deal_status(product.getDeal_status())
+//        .hopelocation(product.gethopelocation())
+//        .dealmethod(product.getdealmethod())
+//        .dealstatus(product.getdealstatus())
 //        .sellerId(user.getId())
 //        .build();
 //    return productDTO;
