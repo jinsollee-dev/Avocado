@@ -54,6 +54,9 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public void insert(ProductDTO productDTO) {
+
+    log.info("글쓰기 확인");
+    log.info(productDTO.getUsername());
     User user = userRepository.findByUsername(productDTO.getUsername());
     Product product = modelMapper.map(productDTO, Product.class);
     product.setUser(user);

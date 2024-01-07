@@ -26,6 +26,7 @@ public class ProductImg extends BaseEntity{
     private Product product;  //product_pno
 
 
+
     public void updateImg(String filename, String uuid, String imgUrl) {
         this.filename = filename;
         this.uuid = uuid;

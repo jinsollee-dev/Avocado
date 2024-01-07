@@ -50,7 +50,8 @@ public class ProductDTO {
 
   @Builder
   public ProductDTO(String pname, String content, Long price, String area,
-                    String hopelocation, String dealmethod, String dealstatus) {
+                    String hopelocation, String dealmethod, String dealstatus,
+                    String writer) {
     this.pname = pname;
     this.content = content;
     this.price = price;
@@ -58,6 +59,7 @@ public class ProductDTO {
     this.hopelocation = hopelocation;
     this.dealmethod = dealmethod;
     this.dealstatus = dealstatus;
+    this.writer = writer;
   }
 
   private static ModelMapper modelMapper = new ModelMapper();

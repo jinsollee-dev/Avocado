@@ -1,0 +1,98 @@
+/* 스크롤바 숨기기 */
+.chat {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    height: 300px; /* 채팅창 높이 */
+}
+
+/* 대화 스타일 */
+li {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    width: fit-content;
+    max-width: 70%; /* 대화 상자 최대 너비 */
+}
+
+/* 상대방 대화 스타일 */
+.other {
+    background-color: #f1f0f0;
+    align-self: flex-start;
+}
+
+/* 내 대화 스타일 */
+.self {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+}
+
+
+
+.heroes {
+    height: 300px;
+    min-height: 150px;
+}
+
+.contain1 {
+    font-family: 'Arial', sans-serif;
+    background: #fff;
+    margin: 0;
+    display: block;
+    align-items: center;
+    height: 150vh;
+
+}
+
+
+.contain2 {
+    border: 1px solid #ccc; /* 테두리 추가 (선택적) */
+    text-align: center;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 30px auto;
+    width: 600px;
+
+}
+
+.contain4{
+
+    box-sizing: content-box;
+
+}
+.blog .blog-comments {
+    margin-bottom: 30px;
+
+}
+
+.blog .blog-comments .comments-count {
+    font-weight: bold;
+}
+
+.blog .blog-comments .comment {
+    margin-top: 30px;
+    position: relative;
+}
+
+.blog .blog-comments .comment .comment-img {
+    margin-right: 14px;
+}
+
+.blog .blog-comments .comment .comment-img img {
+    width: 60px;
+}
+.blog .blog-comments .comment h5 {
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.profileimage{
+    width:150px;
+    height:150px;
+    border-radius: 100px;
+}
+

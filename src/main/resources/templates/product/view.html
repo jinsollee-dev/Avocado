@@ -3,7 +3,6 @@
       layout:decorate="~{layout/basic.html}">
 
 
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -42,11 +41,13 @@
                                     </div>
                                     <div class="carousel-inner">
 
-                                        <div th:each="productImg,iterStat :  ${product.productImgDtoList}" class="carousel-item"
+                                        <div th:each="productImg,iterStat :  ${product.productImgDtoList}"
+                                             class="carousel-item"
                                              th:classappend="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
-                                            <img th:if="${not #strings.isEmpty(productImg.imgUrl)}" th:src="${productImg.imgUrl}"
+                                            <img th:if="${not #strings.isEmpty(productImg.imgUrl)}"
+                                                 th:src="${productImg.imgUrl}"
                                                  class="d-block w-100" alt="..."
-                                            style="max-widthwidth: 400px; max-height: 400px; overflow: hidden">
+                                                 style="max-widthwidth: 400px; max-height: 400px; overflow: hidden">
                                         </div>
 
                                     </div>
@@ -65,92 +66,103 @@
                         </div>
                     </td>
                 </tr>
-                    <tr class="table-light">
-                        <td colspan="5">
-                            <div class="form-group">
-                                <fieldset>
-                                    <label class="form-label mt-4" for="readOnlyInput">작성자</label>
+                <tr class="table-light">
+                    <td colspan="5">
+                        <div class="form-group">
+                            <fieldset>
+                                <label class="form-label mt-4" for="readOnlyInput">작성자</label>
 
-                                    <input class="form-control" id="readOnlyInput" type="text"
-                                           name="username" readonly=""
-                                           th:value="${product.writer}">
+                                <input class="form-control" id="readOnlyInput" type="text"
+                                       name="username" readonly=""
+                                       th:value="${product.writer}">
 
-                                    <a th:href="|@{/user/sellerinfo(searchQuery=${product.writer})}|" class="text-dark">
-<!--                                    <a th:href="'/user/sellerinfo/' +${product.writer}" class="text-dark">-->
+                                <a th:href="|@{/user/sellerinfo(searchQuery=${product.writer})}|" class="text-dark">
+                                    <!--                                    <a th:href="'/user/sellerinfo/' +${product.writer}" class="text-dark">-->
                                     <img src="/images/icon/free-icon-plus-148764.png" width="30px" height="30px">
-                                        판매정보 더보기
-                                    </a>
-                                </fieldset>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="table-light">
-                        <td colspan="5">
-                            <div class="form-group">
-                                <label class="col-form-label mt-4" for="inputDefault1">상품명</label>
-                                <input type="text" class="form-control" id="inputDefault1" name="pname"  th:value="${product.pname}" >
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="table-light">
-                        <td colspan="5">
-                            <div class="form-group">
-                                <label class="col-form-label mt-4" for="inputDefault2">가격</label>
-                                <input type="text" class="form-control" id="inputDefault2" name="price"  th:value="${product.price}">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="table-light">
-                        <td colspan="2">
-                            <div class="form-group">
-                                <label class="col-form-label mt-4" for="inputDefault3">지역</label>
-                                <input type="text" class="form-control" id="inputDefault3" name="area" th:value="${product.area}">
-                            </div>
-                        </td>
-                        <td colspan="2">
-                            <div class="form-group">
-                                <label class="col-form-label mt-4" for="inputDefault4">희망장소</label>
-                                <input type="text" class="form-control" id="inputDefault4" name="hopelocation" th:value="${product.hopelocation}">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="table-light">
-                        <td colspan="5">
-                            <div class="form-group">
-                                <label class="col-form-label mt-4">거래방식</label>
-                                <input type="radio"  name="dealmethod" value="유상" checked>유상
-                                <input type="radio"  name="dealmethod" value="나눔">나눔
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="table-light">
-                        <td colspan="5">
-                            <div class="form-group">
-                                <label for="exampleTextarea" class="form-label mt-4">
-                                    제품 상세 설명</label>
-                                <textarea class="form-control" id="exampleTextarea" rows="3"
-                                          name="descrition">[[${product.content}]]</textarea>
-                            </div>
-                        </td>
-                    </tr>
+                                    판매정보 더보기
+                                </a>
+                            </fieldset>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <td colspan="5">
+                        <div class="form-group">
+                            <label class="col-form-label mt-4" for="inputDefault1">상품명</label>
+                            <input type="text" class="form-control" id="inputDefault1" name="pname"
+                                   th:value="${product.pname}">
+                        </div>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <td colspan="5">
+                        <div class="form-group">
+                            <label class="col-form-label mt-4" for="inputDefault2">가격</label>
+                            <input type="text" class="form-control" id="inputDefault2" name="price"
+                                   th:value="${product.price}">
+                        </div>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <td colspan="2">
+                        <div class="form-group">
+                            <label class="col-form-label mt-4" for="inputDefault3">지역</label>
+                            <input type="text" class="form-control" id="inputDefault3" name="area"
+                                   th:value="${product.area}">
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="form-group">
+                            <label class="col-form-label mt-4" for="inputDefault4">희망장소</label>
+                            <input type="text" class="form-control" id="inputDefault4" name="hopelocation"
+                                   th:value="${product.hopelocation}">
+                        </div>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <td colspan="5">
+                        <div class="form-group">
+                            <label class="col-form-label mt-4">거래방식</label>
+                            <input type="radio" name="dealmethod" value="유상" checked>유상
+                            <input type="radio" name="dealmethod" value="나눔">나눔
+                        </div>
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <td colspan="5">
+                        <div class="form-group">
+                            <label for="exampleTextarea" class="form-label mt-4">
+                                제품 상세 설명</label>
+                            <textarea class="form-control" id="exampleTextarea" rows="3"
+                                      name="descrition">[[${product.content}]]</textarea>
+                        </div>
+                    </td>
+                </tr>
                 <tr class="table-light">
                     <td colspan="2" class="justify-content-center" style="text-align: right">
                         <div id="mypick">
-                        <div id="on" th:if="${mypick} != null"  >
-                           <img id= "myImage2" src="/images/icon/like_on.png" onclick="deleteCartItem()" >
+                            <div id="on" th:if="${mypick} != null">
+                                <img id="myImage2" src="/images/icon/like_on.png" onclick="deleteCartItem()">
+                            </div>
+
+                            <div id="off" th:if="${mypick} == null">
+                                <img id="myImage" src="/images/icon/like_off.png" onclick="addCart()">
+                            </div>
                         </div>
 
-                        <div id="off" th:if="${mypick} == null" >
-                          <img id ="myImage" src="/images/icon/like_off.png"  onclick="addCart()">
-                        </div>
-                        </div>
+                    </td>
 
-                        </td>
+
                     <td colspan="2" class="justify-content-center">
-                        <button type="button" class="btn btn-info">문의하기</button>
+
+                        <a th:href="|/product/reply/${product.pno}|">
+                            <button type="button" class="btn btn-info"
+                            >문의하기
+                            </button>
+                        </a>
                         <button type="button" class="btn btn-success">목록보기</button>
                     </td>
-                 </table>
+            </table>
 
             <table class="table table-hover" border="1" width="80%">
                 <tr class="table-light">
@@ -165,7 +177,7 @@
                 </tr>
             </table>
 
-            </div>
+        </div>
     </div>
 </div>
 
@@ -174,99 +186,62 @@
         crossorigin="anonymous"></script>
 
 <script layout:fragment="script" th:inline="javascript">
-
-       function toggleDivs() {
-        var onDiv = document.getElementById('on');
-        var offDiv = document.getElementById('off');
-
-        if (onDiv.style.display !== 'none') {
-            onDiv.style.display = 'none';
-            offDiv.style.display = 'block';
-
-        } else if(onDiv.style.display === 'none') {
-            onDiv.style.display = 'block';
-            offDiv.style.display = 'none';
-        }
-
-    }
-
-    function changeImage1() {
-             var image = document.getElementById('myImage');
-
-
-        if (image.src.match("/images/icon/like_off.png")) {
-            image.src = "/images/icon/like_on.png";
-            addCart();
-        }
-    }
-
-    function changeImage2() {
-        var image2 = document.getElementById('myImage2');
-
-        if (image2.src.match("/images/icon/like_on.png")) {
-            image2.src = "/images/icon/like_off.png";
-            deleteCartItem();
-        }
-    }
-
-      function addCart(){
+    // 관심목록 등록
+    function addCart() {
         var url = "/cart";
 
         var paramData = {
-            itemId : $("#itemId").val()};
+            itemId: $("#itemId").val()
+        };
 
         var param = JSON.stringify(paramData);
 
-
-    $.ajax({
-            url      : url,
-            type     : "POST",
-            contentType : "application/json",
-            data     : param,
-            dataType : "json",
-            cache   : false,
-            success  : function(result, status){
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: param,
+            dataType: "json",
+            cache: false,
+            success: function (result, status) {
+                const cartItemId = result
+                console.log('받은 cartItemId:' + cartItemId);
                 alert('좋아요 등록완료');
-                var str = "<img id= \"myImage2\" src=\"/images/icon/like_on.png\" onClick=\"deleteCartItem()\" >"
+                $("#mypick").html("")
 
-                $("#on").html("")
-                $("#on").html(str)
-
+                var str = "<img id= \"myImage2\" src=\"/images/icon/like_on.png\" onClick=\"deleteCartItem()\">"
+                $("#mypick").html(str)
+                $('#cartitemId').val(cartItemId);
 
             },
-            error : function(status, error){
-                    alert('로그인 후 이용해주세요');
-                    location.href='/user/login';
-                      }
+            error: function (status, error) {
+                alert('로그인 후 이용해주세요');
+                location.href = '/user/login';
+            }
         });
 
     }
 
-    // 장바구니 삭제 요청
-    function deleteCartItem(){
+    // 관심목록 삭제
+    function deleteCartItem() {
         var cartItemId = $("#cartitemId").val();
         var pno = $("#itemId").val();
         var url = "/cartItem/" + cartItemId;
 
         $.ajax({
-            url      : url,
-            type     : "DELETE",
-            dataType : "json",
-            cache   : false,
-            success  : function(result, status){
-
-             alert('좋아요 삭제완료');
-
+            url: url,
+            type: "DELETE",
+            dataType: "json",
+            cache: false,
+            success: function (result, status) {
+                $("#mypick").html("")
+                alert('좋아요 삭제완료');
                 var str = "<img id= \"myImage\" src=\"/images/icon/like_off.png\" onClick=\"addCart()\" >"
-
-                $("#off").html("")
-                $("#off").html(str)
-
-                // location.href='/product/' + pno ;
+                $("#mypick").html(str)
             },
-            error : function(status, error){
+            error: function (status, error) {
                 alert("오류")
-                }
+            }
         });
     }
 </script>

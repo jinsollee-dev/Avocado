@@ -34,7 +34,7 @@ public class Product extends BaseEntity{
   private String writer;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-  @JoinColumn(name = "username")
+  @JoinColumn
   private User user;
 
   public void change(ProductDTO productDTO) {
