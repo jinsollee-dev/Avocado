@@ -4,6 +4,7 @@ package com.example.avocado.service;
 import com.example.avocado.dto.product.MainProductDto;
 import com.example.avocado.dto.product.ProductDTO;
 import com.example.avocado.dto.product.ProductSearchDTO;
+import com.example.avocado.dto.user.UserResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,9 @@ public interface ProductService {
   void remove(Long pno);
 
   void updatedealstatus(Long pno);
+
+
+  UserResponseDTO findUser(String username); //productService
 
   //  //dto->entity
 //  default Product dtoToEntity(ProductDTO productDTO) {

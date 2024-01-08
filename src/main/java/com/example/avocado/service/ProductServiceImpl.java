@@ -3,7 +3,10 @@ package com.example.avocado.service;
 import com.example.avocado.domain.Product;
 import com.example.avocado.domain.ProductImg;
 import com.example.avocado.domain.User;
+import com.example.avocado.domain.UserImage;
 import com.example.avocado.dto.product.*;
+import com.example.avocado.dto.user.UserResponseDTO;
+import com.example.avocado.repository.ImageRepository;
 import com.example.avocado.repository.ProductImgRepository;
 import com.example.avocado.repository.ProductRepository;
 import com.example.avocado.repository.UserRepository;
@@ -41,6 +44,7 @@ public class ProductServiceImpl implements ProductService {
   private final UserRepository userRepository;
   private final ProductRepository productRepository;
   private final ProductImgRepository productImgRepository;
+  private final ImageRepository imageRepository;
   private final ModelMapper modelMapper;
   private final ImageService imageService;
 
@@ -227,5 +231,18 @@ public class ProductServiceImpl implements ProductService {
 
   }
 
+
+  @Override
+  public UserResponseDTO findUser(String username) {
+    User user = userRepository.findByUsername(username);
+    UserImage userImage = imageRepository.findByUser(user);
+
+    UserResponseDTO result = UserResponseDTO.builder()
+            .user(user)
+            .userImage(userImage)
+            .build();
+
+    return result;
+  }
 
 }

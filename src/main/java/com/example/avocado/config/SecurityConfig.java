@@ -28,8 +28,9 @@ public class SecurityConfig {
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable())
                 .authorizeHttpRequests(authorizeHttpRequestConfigurer ->authorizeHttpRequestConfigurer
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/","/user/**").permitAll()
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/","/user/join", "/user/login").permitAll()
+                        .requestMatchers("/user/admin").hasAuthority("ADMIN")
+                                .requestMatchers("/product/admin").hasAuthority("ADMIN")
 //                        .requestMatchers("/manager/**").hasAuthority("MANAGER")
                         //.requestMatchers("/board/**").hasAuthority("USER")
                         .anyRequest().authenticated()

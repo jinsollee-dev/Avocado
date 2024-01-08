@@ -14,6 +14,7 @@ import com.example.avocado.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -161,6 +162,30 @@ public class ProductController {
     public String remove(Long pno) {
         productService.remove(pno);
         return "redirect:/";
+    }
+
+
+    @GetMapping("/admin") //product controller
+    public String adminPage(Model model, Authentication authentication, Pageable pageable){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserResponseDTO userResponseDTO = productService.findUser(userDetails.getUsername());
+        // User == Admin.Role 일 경우
+        if(userResponseDTO.getRole().equals("ADMIN")){
+            List<ProductDTO> productList = productService.getList(pageable);
+            model.addAttribute("user",userResponseDTO);
+            model.addAttribute("productList",productList);
+            return "product/adminPage";
+        }else{
+            return "redirect:/";
+        }
+    }
+
+
+    @PostMapping("/change/{id}") //usercontroller
+    public String userChange(@PathVariable Long id, User user){
+        userService.userUpdate(id,user);
+
+        return "/";
     }
 }
 

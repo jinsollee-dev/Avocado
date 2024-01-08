@@ -137,13 +137,13 @@
 
                 if(dto.replyer == writer){
                 str += `<li class="list-group-item d-flex other replyItem">
-                      <span>${dto.rno}</span>
-                      <span data-rno="${dto.rno}">${dto.replyText}</span>
+                      <span style="font-family: 'Apple Color Emoji'; font-weight: bold; margin-right: 10px;">${dto.replyer} : </span>
+                      <span  style="font-family: 'Apple Color Emoji'" data-rno="${dto.rno}" : >${dto.replyText}</span>
                       </li>`
                 } else if(dto.replyer !== writer){
                     str += `<li class="list-group-item d-flex self replyItem">
-                      <span>${dto.replyer}</span>
-                      <span data-rno="${dto.rno}">${dto.replyText}</span>
+                      <span style="font-family: 'Apple Color Emoji'; font-weight: bold; margin-right: 10px;">${dto.replyer} : </span>
+                      <span style="font-family: 'Apple Color Emoji'" data-rno="${dto.rno}">${dto.replyText}</span>
                       </li>`
                 }
             }

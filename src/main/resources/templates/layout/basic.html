@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       xmlns:th="http://www.thymeleaf.org"
       lang="en">
   <head>
@@ -98,10 +99,14 @@
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
             >
-              <li class="active"><a href="/">Home</a></li>
-              <li><a href="/product/thistory">거래내역</a></li>
-              <li><a href="/product/register">상품등록</a></li>
-              <li class="has-children">
+              <!--admin-->
+              <li sec:authorize="hasAnyAuthority('ADMIN')"><a href="/user/admin">회원정보</a></li>
+              <li sec:authorize="hasAnyAuthority('ADMIN')"><a href="/product/admin">상품정보</a></li>
+
+              <li  class="active"><a href="/">Home</a></li>
+              <li ><a href="/product/thistory">거래내역</a></li>
+              <li ><a href="/product/register">상품등록</a></li>
+              <li  class="has-children">
                 <a href="/user/profile">나의 정보</a>
                 <ul class="dropdown">
                   <li><a href="/user/profile">프로필</a></li>

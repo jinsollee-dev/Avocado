@@ -1,5 +1,6 @@
 package com.example.avocado.controller;
 
+import com.example.avocado.domain.User;
 import com.example.avocado.dto.product.MainProductDto;
 import com.example.avocado.dto.product.ProductDTO;
 import com.example.avocado.dto.product.ProductSearchDTO;
@@ -25,6 +26,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -190,4 +192,28 @@ public class UserController {
         log.info(userResponseDTO.getUrl());
         return  "user/deal";
     }
+
+
+    @GetMapping("/admin") //usercontroller
+    public String adminPage(Model model, Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserResponseDTO userResponseDTO = userService.findUser(userDetails.getUsername());
+        // User == Admin.Role 일 경우
+        if(userResponseDTO.getRole().equals("ADMIN")){
+            List<User> userList = userService.userList();
+            model.addAttribute("user",userResponseDTO);
+            model.addAttribute("userList",userList);
+            return "user/adminPage";
+        }else{
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/change/{id}") //usercontroller
+    public String userChange(@PathVariable Long id, User user){
+        userService.userUpdate(id,user);
+
+        return "/";
+    }
+
 }

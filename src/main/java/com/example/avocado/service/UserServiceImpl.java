@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -170,4 +171,20 @@ public class UserServiceImpl implements UserService{
             return false;
         }
     }
+
+
+    @Override
+    public List<User> userList() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void userUpdate(Long id, User user) {
+        User tempUser = userRepository.findById(id).get();
+        tempUser.setRole(user.getRole());
+
+        userRepository.save(tempUser);
+    }
+
+
 }
