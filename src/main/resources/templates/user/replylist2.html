@@ -20,31 +20,32 @@
                 <div class="blog-comments">
                     <div id="comment-1" class="comment">
                         <div class="row justify-content-between align-items-center">
-                            <div class="comment-img">
+                            <div class="comment-img justify-content-center">
                                 <img th:src="|/images/display/${user.getUrl()}|" class="profileimage">
-                                <h3 class="d-inline-block">[[${user.getNickname()}]]님의 관심상품🎈</h3>
+                                <h3 class="d-inline-block">[[${writer}]]에게 온 문의내역🎈</h3>
                             </div>
                         </div>
-                        <div class="contain4">
 
-                            <div class="row">
-                                <th:block th:each="product, status: ${cartItems}">
-                                    <div class="col-md-4 margin" style="margin-bottom: 30px">
-                                        <div class="card">
-                                            <img th:src="|${product.imgUrl}|" class="card-img-top"  height="200" >
-                                            <div class="card-body">
-                                                <h4 class="card-title">[[${product.itemName}]]</h4>
-                                                <p class="card-title">[[${product.price}]]원</p>
-                                                <p class="card-text">[[${writer}]]</p>
-                                            </div>
-                                            </a>
-                                        </div>
+
+
+                                <th:block th:each="product, status: ${updatelist}">
+                                    <div th:if="${product.getDealstatus()=='판매중'}">
+                                        <img th:src="|${product.getImgUrl()}|"  height="200px" width="150px" >
+                                        <input type="hidden" id="pno" name="pno" th:value="${product.getPno()}">
+
+                                        <th:block th:each="replyrooms,  status: ${product.getReplylist()}">
+                                            <input type="hidden" id="userid" name="userid" th:value="${replyrooms.getUser().getId()}">
+                                            <p th:text="${replyrooms.getUser().getNickname()}"></p> <span>님의 문의</span>
+                                            <a th:href="@{/product/dealdone/{userId}/{replyId}(userId=${replyrooms.getUser().getId()}, replyId=${replyrooms.rid})}">
+                                                <button type="button">판매확정</button></a>
+
+                                        </th:block>
                                     </div>
                                 </th:block>
-                            </div>
 
 
-                        </div>
+
+
                     </div>
                 </div>
             </div>

@@ -34,40 +34,10 @@ public interface ProductService {
    void updateProduct(ProductDTO productDTO);
   void remove(Long pno);
 
-  void updatedealstatus(Long pno);
+  Long updatedealstatus(Long pno, String buyer, String seller);
 
 
   UserResponseDTO findUser(String username); //productService
 
-  //  //dto->entity
-//  default Product dtoToEntity(ProductDTO productDTO) {
-//    User user = User.builder().id(productDTO.getSellerId()).build();
-//    Product product = Product.builder()
-//        .pname(productDTO.getPname())
-//        .content(productDTO.getContent())
-//        .price(productDTO.getPrice())
-//        .area(productDTO.getArea())
-//        .hopelocation(productDTO.gethopelocation())
-//        .dealmethod(productDTO.getdealmethod())
-//        .dealstatus(productDTO.getdealstatus())
-//        .id(user)
-//        .build();
-//    return product;
-//  }
-//
-//  //entity->dto
-//  default ProductDTO entityToDto(Product product, User user) {
-//    ProductDTO productDTO = ProductDTO.builder()
-//        .pno(product.getPno())
-//        .pname(product.getPname())
-//        .content(product.getContent())
-//        .price(product.getPrice())
-//        .area(product.getArea())
-//        .hopelocation(product.gethopelocation())
-//        .dealmethod(product.getdealmethod())
-//        .dealstatus(product.getdealstatus())
-//        .sellerId(user.getId())
-//        .build();
-//    return productDTO;
-//  }
+  List<ProductDTO> getList2 ();
 }

@@ -27,16 +27,18 @@ public class QReply extends EntityPathBase<Reply> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modDate = _super.modDate;
 
-    public final QProduct product;
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
     public final StringPath replyer = createString("replyer");
 
+    public final QReplyRoom replyRoom;
+
     public final StringPath replyText = createString("replyText");
 
     public final NumberPath<Long> rno = createNumber("rno", Long.class);
+
+    public final StringPath writer = createString("writer");
 
     public QReply(String variable) {
         this(Reply.class, forVariable(variable), INITS);
@@ -56,7 +58,7 @@ public class QReply extends EntityPathBase<Reply> {
 
     public QReply(Class<? extends Reply> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.product = inits.isInitialized("product") ? new QProduct(forProperty("product"), inits.get("product")) : null;
+        this.replyRoom = inits.isInitialized("replyRoom") ? new QReplyRoom(forProperty("replyRoom"), inits.get("replyRoom")) : null;
     }
 
 }

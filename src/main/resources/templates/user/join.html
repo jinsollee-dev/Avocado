@@ -4,6 +4,11 @@
       layout:decorate="~{layout/basic.html}"
       lang="en">
 
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/join.css}">
+</th:block>
+
 <div layout:fragment="content">
     <div class="container">
 
@@ -12,7 +17,9 @@
 
                 </div>
             </div>
-        <h3>Join</h3>
+
+        <div class="contain22">
+        <h3>회원가입</h3>
         <form th:if="${dto == null}" action="/user/register" method="post"  enctype="multipart/form-data">
 <!--            <input type="hidden" id="delete_check" value="1">-->
             <div class="form-group mt-3">
@@ -105,8 +112,9 @@
             <br><br>
             <div class="form-group mt-3">
                 <button type="submit" class="btn btn-primary">Register</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="reset" class="btn btn-info">Reset</button>
             </div>
         </form>
+    </div>
     </div>
 </div>

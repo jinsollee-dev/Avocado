@@ -25,4 +25,6 @@ public interface UserService {
     List<User> userList();
 
     void userUpdate(Long id,User user);
+
+    User finduid(Long id);
 }

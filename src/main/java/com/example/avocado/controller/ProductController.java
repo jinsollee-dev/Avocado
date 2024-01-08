@@ -1,13 +1,14 @@
 package com.example.avocado.controller;
 
 import com.example.avocado.config.auth.PrincipalDetails;
-import com.example.avocado.domain.ProductImg;
+import com.example.avocado.domain.ReplyRoom;
 import com.example.avocado.domain.User;
 
 import com.example.avocado.dto.CartListDto;
 import com.example.avocado.dto.product.ProductDTO;
 import com.example.avocado.dto.product.ProductImgDTO;
 import com.example.avocado.dto.user.UserResponseDTO;
+import com.example.avocado.repository.ReplyRoomRepository;
 import com.example.avocado.service.CartService;
 import com.example.avocado.service.ProductService;
 import com.example.avocado.service.UserService;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,6 +35,7 @@ public class ProductController {
     private final CartService cartService;
     private final ProductService productService;
     private final UserService userService;
+    private final ReplyRoomRepository replyRoomRepository;
 
     @GetMapping("/register")
     public void register(User user, Model model,
@@ -128,15 +129,15 @@ public class ProductController {
     }
 
 
-    @GetMapping("/done/{pno}")
-    public String done(@PathVariable("pno") Long pno, Model model) {
-        productService.updatedealstatus(pno);
-        ProductDTO productDTO = productService.getProductDetail(pno);
-
-
-        model.addAttribute("product", productDTO);
-        return "redirect:/user/deal";
-    }
+//    @GetMapping("/done/{pno}")
+//    public String done(@PathVariable("pno") Long pno, Model model) {
+//        productService.updatedealstatus(pno);
+//        ProductDTO productDTO = productService.getProductDetail(pno);
+//
+//
+//        model.addAttribute("product", productDTO);
+//        return "redirect:/user/deal";
+//    }
 
 
     // 상품 문의 하기
@@ -187,6 +188,33 @@ public class ProductController {
 
         return "/";
     }
+
+
+    @GetMapping("/dealdone/{id}/{rid}")
+    public String dealstatuschange(@PathVariable("id") Long id,
+                                            @PathVariable("rid") Long rid,
+                                            Authentication authentication){
+
+        log.info("판매완료처리확인");
+        log.info(id);  //구매자 id값
+        log.info(rid);     //댓글방 rid
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();  //판매자정보
+        UserResponseDTO userResponseDTO = productService.findUser(userDetails.getUsername());
+
+        ReplyRoom replyRoom = replyRoomRepository.findById(rid).get();
+        Long pno = replyRoom.getProduct().getPno();
+        log.info(pno);
+
+        User user = userService.finduid(id);
+        String buyer= user.getNickname(); //구매자 nickname값으로 buyer에 넣어주기
+        String seller = userResponseDTO.getNickname(); //판매자 nickname값으로 seller에 넣어주기
+
+        Long dno = productService.updatedealstatus(pno, buyer, seller);
+       return "/replylist";
+
+    }
+
 }
 
 

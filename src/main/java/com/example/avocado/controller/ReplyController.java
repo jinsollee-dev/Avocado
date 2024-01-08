@@ -61,7 +61,7 @@ public class ReplyController {
         String buyer = userResponseDTO.getNickname();
         ProductDTO productDTO =productService.getProductDetail(pno);
         String writer = productDTO.getWriter();
-        PageResponseDTO<ReplyDTO> responseDTO = replyService.findByPnoAndReplyer(pno, buyer, writer, pageRequestDTO);
+        PageResponseDTO<ReplyDTO> responseDTO = replyService.findByPnoAndReplyer(pno, buyer, pageRequestDTO);
         return responseDTO;
     }
 

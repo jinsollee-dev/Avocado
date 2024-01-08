@@ -1,15 +1,9 @@
 package com.example.avocado.service;
 
-import com.example.avocado.domain.Product;
-import com.example.avocado.domain.ProductImg;
-import com.example.avocado.domain.User;
-import com.example.avocado.domain.UserImage;
+import com.example.avocado.domain.*;
 import com.example.avocado.dto.product.*;
 import com.example.avocado.dto.user.UserResponseDTO;
-import com.example.avocado.repository.ImageRepository;
-import com.example.avocado.repository.ProductImgRepository;
-import com.example.avocado.repository.ProductRepository;
-import com.example.avocado.repository.UserRepository;
+import com.example.avocado.repository.*;
 import com.example.avocado.service.image.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -47,6 +41,7 @@ public class ProductServiceImpl implements ProductService {
   private final ImageRepository imageRepository;
   private final ModelMapper modelMapper;
   private final ImageService imageService;
+  private final DealstatusRepository dealstatusRepository;
 
   @Override
   public Long register(ProductDTO productDTO) {
@@ -218,14 +213,6 @@ public class ProductServiceImpl implements ProductService {
 
   }
 
-
-  public void updatedealstatus(Long pno){
-    Product product = productRepository.findByPno(pno);
-    product.setDealstatus("판매완료");
-    productRepository.save(product);
-
-  }
-
   @Override
   public void remove(Long pno) {
 
@@ -243,6 +230,36 @@ public class ProductServiceImpl implements ProductService {
             .build();
 
     return result;
+  }
+
+
+
+  @Override
+  public List<ProductDTO> getList2 () {
+    List<Product> result = productRepository.findAll();
+    List<ProductDTO> productDTOList = result.stream().map(product ->
+                    modelMapper.map(product, ProductDTO.class))
+            .collect(Collectors.toList());
+    return productDTOList;
+  }
+
+
+
+//판매완료처리
+  @Override
+  public Long updatedealstatus(Long pno, String buyer, String seller) {
+    Product product = productRepository.findByPno(pno);
+    String pname = product.getPname();
+    product.setDealstatus("판매완료");
+    productRepository.save(product);
+
+    Dealstatus dealstatus = Dealstatus.builder()
+            .pname(pname)
+            .pno(pno)
+            .buyer(buyer)
+            .seller(seller)
+            .build();
+    return dealstatusRepository.save(dealstatus).getDno();
   }
 
 }

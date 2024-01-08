@@ -11,16 +11,16 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude ="product")
 @Builder
 public class Reply extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
+    private ReplyRoom replyRoom;
     private String replyText;
-    private String replyer;
+    private String replyer;  //구매자
+    private String writer; // 판매자
 
 
 
@@ -31,4 +31,6 @@ public class Reply extends BaseEntity{
     //@ManyToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name="user_id")
     //private MemberEntity member;
+
+
 }

@@ -14,16 +14,23 @@
     <div class="heroes">
     </div>
 
-    <div class="container mb-30 mt-sm-5 align-items-center">
+
+    <div class="container">
+        <h3> 판매자정보</h3>
         <div class="contain1">
             <div class="contain2">
                 <div class="blog-comments">
                     <div id="comment-1" class="comment">
-                        <div class="row justify-content-between align-items-center">
+                        <div class="d-flex">
                             <div class="comment-img">
-                                <img th:src="|/images/display/${user.getUrl()}|" class="profileimage">
-                                <h3 class="d-inline-block">[[${user.getNickname()}]]님의 관심상품🎈</h3>
+<!--                                <img th:src="|/images/display/${user.getUrl()}|" class="profileimage">-->
                             </div>
+                            <div>
+                                <h5>님의 관심목록</h5>
+                            </div>
+                        </div>
+                        <div>
+                            <h5>판매 상품</h5>
                         </div>
                         <div class="contain4">
 
@@ -32,11 +39,10 @@
                                     <div class="col-md-4 margin" style="margin-bottom: 30px">
                                         <div class="card">
                                             <img th:src="|${product.imgUrl}|" class="card-img-top"  height="200" >
-                                            <div class="card-body">
-                                                <h4 class="card-title">[[${product.itemName}]]</h4>
-                                                <p class="card-title">[[${product.price}]]원</p>
-                                                <p class="card-text">[[${writer}]]</p>
-                                            </div>
+                                                <div class="card-body">
+                                                    <h4 class="card-title">[[${product.itemName}]]</h4>
+                                                    <p class="card-title">[[${product.price}]]</p>
+                                                </div>
                                             </a>
                                         </div>
                                     </div>
@@ -44,6 +50,7 @@
                             </div>
 
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,12 +58,12 @@
         </div>
     </div>
 </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-</html>
+
+
 
 
 

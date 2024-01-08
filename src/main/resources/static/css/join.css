@@ -13,20 +13,10 @@
 
 }
 
-.contain11 {
-    font-family: 'Arial', sans-serif;
-    background: #fff;
-    margin: 0;
-    display: block;
-    align-items: center;
-    height: 100vh;
-
-}
-
 
 .contain22 {
     border: 1px solid #ccc; /* 테두리 추가 (선택적) */
-    text-align: center;
+    text-align: left;
     background: #fff;
     padding: 40px;
     border-radius: 8px;
@@ -82,8 +72,8 @@
 }
 
 .profileimage{
-    width:150px;
-    height:150px;
+    width:200px;
+    height:200px;
     border-radius: 100px;
     object-fit: cover;
     border: rgba(194, 194, 194, 0.51) solid 0.5px;
@@ -99,5 +89,3 @@
 img {
     object-fit: cover;
 }
-.username{text-align: left;
-margin-bottom: 30px;}

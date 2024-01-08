@@ -11,7 +11,11 @@
     <link rel="stylesheet" th:href="@{/css/style2.css}">
 </th:block>
 
+
+<head>
 <style>
+
+    .tt{margin-left: 450px;}
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -32,10 +36,11 @@
 <div layout:fragment="content">
     <div class="heroes">
     </div>
-    <div class="container-fluid mt-3">
+    <div class="container-fluid mt-3 tt">
+        <div class="contain1">
+        <div class="contain2">
         <div class="row">
 
-            <!--            &lt;!&ndash; SIDE BAR &ndash;&gt;-->
 
 
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -74,7 +79,8 @@
         </div>
     </div>
 </div>
-
+</div>
+</div>
 
 <script layout:fragment="script" th:inline="javascript">
 

@@ -1,0 +1,92 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/thistory.css}">
+</th:block>
+
+
+<div layout:fragment="content">
+    <div class="heroes">
+    </div>
+
+    <div class="holecontain">
+    <div class="container">
+        <div class="contain1">
+                    <div class="contain2">
+                        <div class="blog-comments">
+                            <div id="comment-1" class="comment">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="comment-img justify-content-center">
+                                        <img th:src="|/images/display/${user.getUrl()}|" class="profileimage">
+                                        <h3 class="d-inline-block">[[${writer}]]에게 온 문의내역🎈</h3>
+                                    </div>
+                                </div>
+
+
+                                <th:block th:each="product, status: ${updatelist}">
+
+                                    <div th:if="${product.getDealstatus()=='판매중'}">
+                                        <div style="display: block">
+                                        <div class="comment">
+                                            <div class="comment-details">
+
+                                        <img class="product-img" th:src="|${product.getImgUrl()}|">
+                                                <div>
+                                                   <p style="color: red; font-size: 20px" class="comment-author"> [[${product.getDealstatus()}]]</p>
+                                                    <p style="color:black; font-size: 15px">[[${product.getPrice()}]]원</p>
+                                                </div>
+
+                                               <input type="hidden" id="pno" name="pno" th:value="${product.getPno()}">
+                                            </div>
+                                        <th:block th:each="replyrooms,  status: ${product.getReplylist()}">
+                                            <div style="display: block">
+                                            <div class="reply">
+                                                <div class="reply-details">
+                                                    <img class ="replyicon" src="/images/flat.png">
+                                                    <div class="comment-info">
+                                                    <input type="hidden" id="userid" name="userid" th:value="${replyrooms.getUser().getId()}">
+                                                        <div style="display: block;">
+
+                                                            <p><span style="font-weight: bold; color:black">⭐[[${replyrooms.getUser().getNickname()}]]⭐</span>님의 문의</p>
+                                                        </div>
+                                                        <p class="comment-author">
+                                                            <a th:href="@{/product/dealdone/{userId}/{replyId}(userId=${replyrooms.getUser().getId()}, replyId=${replyrooms.rid})}">
+                                                                <button type="button">판매확정</button></a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                    </div>
+                                    </div>
+
+                                </th:block>
+                            </div>
+
+
+
+
+                </div>
+            </div>   <!--contain2끝-->
+        </div><!--contain1끝-->
+    </div><!--container끝-->
+</div>
+</div> <!--content  block끝-->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+
+
+
+

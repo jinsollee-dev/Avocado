@@ -4,12 +4,16 @@ package com.example.avocado.controller;
 
 import com.example.avocado.dto.CartItemDto;
 import com.example.avocado.dto.CartListDto;
+import com.example.avocado.dto.user.UserResponseDTO;
 import com.example.avocado.service.CartService;
+import com.example.avocado.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +30,7 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
+    private  final UserService userService;
 
     // 장바구니 담기
     @PostMapping(value = "/cart")
@@ -59,11 +64,17 @@ public class CartController {
 
     // 장바구니 조회
     @GetMapping(value = "/mypicklist")
-    public String cartList(Principal principal, Model model) {
-
+    public String cartList(Principal principal, Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        log.info("===프로필보기");
+        log.info(userDetails);
+        UserResponseDTO userResponseDTO = userService.findUser(userDetails.getUsername());
+        model.addAttribute("user", userResponseDTO);
+        log.info("==사진위치확인");
+        log.info(userResponseDTO.getUrl());
         List<CartListDto> cartListDtos = cartService.getCartList(principal.getName());
         model.addAttribute("cartItems", cartListDtos);
-        return "user/mypicklist";
+        return "/user/mypicklist";
     }
 
 

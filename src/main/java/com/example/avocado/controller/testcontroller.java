@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class testcontroller {
 
 
-  @GetMapping("/thistory")
-  public void thistory(){}
-
   @GetMapping("/buyhistory")
   public void buyhistory(){}
 

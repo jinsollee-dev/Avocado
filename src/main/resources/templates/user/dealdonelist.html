@@ -14,35 +14,38 @@
     <div class="heroes">
     </div>
 
-    <div class="container mb-30 mt-sm-5 align-items-center">
+
+    <div class="container">
+        <h3> 나의 구매완료 목록</h3>
         <div class="contain1">
             <div class="contain2">
                 <div class="blog-comments">
                     <div id="comment-1" class="comment">
                         <div class="row justify-content-between align-items-center">
-                            <div class="comment-img">
+                            <div class="comment-img justify-content-center">
                                 <img th:src="|/images/display/${user.getUrl()}|" class="profileimage">
-                                <h3 class="d-inline-block">[[${user.getNickname()}]]님의 관심상품🎈</h3>
+                                <h3 class="d-inline-block">[[${user.nickname}]]님의 구매물건🎈</h3>
                             </div>
                         </div>
+                          </div>
+
                         <div class="contain4">
 
                             <div class="row">
-                                <th:block th:each="product, status: ${cartItems}">
+                                <th:block th:each="dealdone, status: ${dealdonelist}">
                                     <div class="col-md-4 margin" style="margin-bottom: 30px">
                                         <div class="card">
-                                            <img th:src="|${product.imgUrl}|" class="card-img-top"  height="200" >
-                                            <div class="card-body">
-                                                <h4 class="card-title">[[${product.itemName}]]</h4>
-                                                <p class="card-title">[[${product.price}]]원</p>
-                                                <p class="card-text">[[${writer}]]</p>
-                                            </div>
+                                                <div class="card-body">
+                                                    <h4 class="card-title">[[${dealdone.pname}]]</h4>
+                                                    <p>판매자 : [[${dealdone.seller}]]님</p>
+
+                                                </div>
                                             </a>
                                         </div>
                                     </div>
                                 </th:block>
                             </div>
-
+                        </div>
 
                         </div>
                     </div>
@@ -50,13 +53,13 @@
             </div>
         </div>
     </div>
-</div>
-</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-</html>
+
+
 
 
 

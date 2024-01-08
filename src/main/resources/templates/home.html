@@ -71,6 +71,7 @@
               <img th:src="|${product.imgUrl}|" class="card-img-top" th:alt="${product.pname}" height="300">
               <div class="card-body">
                 <h4 class="card-title">[[${product.pname}]]</h4>
+                <p style="color: crimson">[[${product.dealstatus}]]</p>
                 <p class="card-text">[[${product.writer}]]</p>
                 <h3 class="card-title text-danger">[[${product.price}]]원</h3>
               </div>

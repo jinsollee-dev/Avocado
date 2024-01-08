@@ -10,15 +10,14 @@
 
 
     <div class="container">
-        <h3 th:text="|${user.getUsername()}의 정보|"></h3>
-        <div class="contain1">
-            <div class="contain2">
+        <div class="contain11">
+            <div class="contain22">
+                <h3 th:text="|${user.getNickname()}의 프로필|" class="username"></h3>
                 <form action="/user/update" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col mb-3">
                             <div id="comment-1" class="comment">
                                 <div class="d-flex">
-
                                     <div class="comment-img" id="imagePreview">
                                         <img th:src="|/images/display/${user.getUrl()}|" class="profileimage">
                                     </div>
@@ -57,6 +56,7 @@
                                     type="password"
                                     class="form-control"
                                     name="password"
+                                    placeholder="4자에서~8자리해주세요"
                             />
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                                 value="정보수정"
                                 class="btn btn-primary"
                         />
-                        <button type="button" class="btn btn-dark">회원탈퇴</button>
+                        <button type="button" class="btn btn-dark" onclick="location.href='/user/withdrawal'">회원탈퇴</button>
                     </div>
                 </form>
 

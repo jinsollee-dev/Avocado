@@ -186,5 +186,10 @@ public class UserServiceImpl implements UserService{
         userRepository.save(tempUser);
     }
 
+    @Override
+    public User finduid(Long id){
+        User user = userRepository.findById(id).get();
+        return user;
+    }
 
 }

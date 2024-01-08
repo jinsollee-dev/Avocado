@@ -52,7 +52,7 @@
 
 }
 .comment-details {
-    display: flex;
+    display: flex;;
     align-items: center;
     padding-bottom: 10px;
     margin-bottom: 10px;
@@ -60,7 +60,7 @@
 }
 .reply-details {
     display: flex;
-    align-items: center;
+   align-items: center;
     margin-bottom: 10px;
 }
 
@@ -97,6 +97,7 @@
 }
 
 .reply{
+    display: block;
     margin-left: 20px; /* 들여쓰기 */
     /*border-left: 1px solid #ccc;*/
     padding-left: 10px;
@@ -111,4 +112,14 @@
 .myquest{
     border-bottom:1px solid #ccc;
     display: block;
+}
+
+.profileimage{
+    width:150px;
+    height:150px;
+    border-radius: 100px;
+    object-fit: cover;
+    border: rgba(194, 194, 194, 0.51) solid 0.5px;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
