@@ -154,12 +154,12 @@
 
                     <td colspan="2" class="justify-content-center">
 
-                        <a th:href="|/product/reply/${product.pno}|">
-                            <button type="button" class="btn btn-info"
-                            >문의하기
-                            </button>
+                        <span th:if="${#authentication.principal.username!=seller.getUsername()}">
+                       <a th:href="|/product/reply/${product.pno}|">
+                            <button type="button" class="btn btn-info">문의하기</button>
                         </a>
-                        <button type="button" class="btn btn-success">목록보기</button>
+                            </span>
+                        <button type="button" class="btn btn-success" onclick="location.href='/'">목록보기</button>
                     </td>
             </table>
 

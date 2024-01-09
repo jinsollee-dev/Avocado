@@ -43,7 +43,7 @@
                 <tr class="table-light">
                     <td colspan="5">
                         <div class="input-group mb-3">
-                            <input type="text" class="replyer" name="replyer" th:value="${buyer.nickname}">
+                            <input type="text" class="replyer" name="replyer" th:value="${seller.getNickname()}">
                         </div>
                         <div class="form-group">
                              <textarea class="form-control replyText"
@@ -131,6 +131,7 @@
     const writer = [[${product.writer}]]
     const replyText = document.querySelector(".replyText")
    const replyer = document.querySelector(".replyer")
+    const rid = [[${rid}]]
 
 
 
@@ -146,12 +147,12 @@
             for (const dto of dtoList) {
 
                 if(dto.replyer == writer){
-                str += `<li class="list-group-item d-flex other replyItem">
+                str += `<li class="list-group-item d-flex self replyItem">
                       <span style="font-family: 'Apple Color Emoji'; font-weight: bold; margin-right: 10px;">${dto.replyer} : </span>
                       <span  style="font-family: 'Apple Color Emoji'" data-rno="${dto.rno}" : >${dto.replyText}</span>
                       </li>`
                 } else if(dto.replyer !== writer){
-                    str += `<li class="list-group-item d-flex self replyItem">
+                    str += `<li class="list-group-item d-flex other replyItem">
                       <span style="font-family: 'Apple Color Emoji'; font-weight: bold; margin-right: 10px;">${dto.replyer} : </span>
                       <span style="font-family: 'Apple Color Emoji'" data-rno="${dto.rno}">${dto.replyText}</span>
                       </li>`
@@ -183,8 +184,8 @@
 
     //페이징 처리가 된, axios로 댓글 전체 가져오기 -함수 정의
     function printReplies(page,size,goLast){
-        //{bno:bno, page:lastPage, size:size}
-        getList({pno, page,size, goLast}).then(
+        const rid = "[[${rid}]]"; // 현재 rid 값
+        getList({pno, page,size, goLast, rid}).then(
             data => {
                 printList(data.dtoList) // 목록 처리 함수 실행
                 printPages(data) //페이지 처리 함수 실행
@@ -226,7 +227,8 @@
         const replyObj = {
             pno: pno,
             replyText: replyText.value,
-            replyer: replyer.value
+            replyer: replyer.value,
+            rid : rid
         } //key이름을 replyDTO의 필드명과 일치시켜야 함
 
         //댓글 입력을 위한 axios 함수 addReply, addReply의 리턴값 = result
@@ -351,14 +353,14 @@
 
 
     //paging 사용
-    async function getList({pno, page, size, goLast}){
+    async function getList({pno, page, size, goLast, rid}){
 
-        const result = await axios.get(`/replies/list/${pno}`, {params: {page, size}})
+        const result = await axios.get(`/replies/answer/list/${pno}`, {params: {page, size, rid}})
 
         if(goLast){
             const total = result.data.total
             const lastPage = parseInt(Math.ceil(total/size))
-            return getList({pno:pno, page:lastPage, size:size})
+            return getList({pno:pno, page:lastPage, size:size, rid:rid})
         }
         return result.data
     }

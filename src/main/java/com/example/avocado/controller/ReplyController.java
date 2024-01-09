@@ -1,12 +1,17 @@
 package com.example.avocado.controller;
 
 
+import com.example.avocado.domain.Reply;
+import com.example.avocado.domain.ReplyRoom;
 import com.example.avocado.domain.User;
 import com.example.avocado.dto.PageRequestDTO;
 import com.example.avocado.dto.PageResponseDTO;
+import com.example.avocado.dto.product.AnswerReplyDTO;
 import com.example.avocado.dto.product.ProductDTO;
 import com.example.avocado.dto.product.ReplyDTO;
 import com.example.avocado.dto.user.UserResponseDTO;
+import com.example.avocado.repository.ReplyRepository;
+import com.example.avocado.repository.ReplyRoomRepository;
 import com.example.avocado.repository.UserRepository;
 import com.example.avocado.service.ProductService;
 import com.example.avocado.service.ReplyService;
@@ -33,6 +38,7 @@ public class ReplyController {
     private final ReplyService replyService;
     private final UserService userService;
     private final ProductService productService;
+    private final ReplyRoomRepository replyRoomRepository;
 
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +67,7 @@ public class ReplyController {
         String buyer = userResponseDTO.getNickname();
         ProductDTO productDTO =productService.getProductDetail(pno);
         String writer = productDTO.getWriter();
-        PageResponseDTO<ReplyDTO> responseDTO = replyService.findByPnoAndReplyer(pno, buyer, pageRequestDTO);
+        PageResponseDTO<ReplyDTO> responseDTO = replyService.findByPnoAndReplyerAndSeller(pno, buyer, writer,pageRequestDTO);
         return responseDTO;
     }
 
@@ -90,4 +96,38 @@ public class ReplyController {
         replyService.remove(rno);
         return resultMap;
     }
+
+
+
+    @PostMapping(value = "/answer", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, Long> registeranswer(@Valid @RequestBody AnswerReplyDTO answerReplyDTO,
+                                      BindingResult bindingResult)
+            throws BindException {
+        log.info("답글입력확인");
+        log.info(answerReplyDTO.getRid());
+        if(bindingResult.hasErrors()){
+            throw new BindException(bindingResult);
+        }
+        Map<String, Long> resultMap = new HashMap<>();
+        Long rno = replyService.registeranswer(answerReplyDTO);
+        resultMap.put("rno", rno);
+        return resultMap;
+    }
+
+
+    @GetMapping("/answer/list/{pno}")
+    public PageResponseDTO<ReplyDTO> anwsergetList(@PathVariable("pno") Long pno,
+                                             @RequestParam("rid") Long rid,
+                                             PageRequestDTO pageRequestDTO,
+                                             Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserResponseDTO userResponseDTO = userService.findUser(userDetails.getUsername());
+        ReplyRoom replyRoom= replyRoomRepository.findById(rid).get();
+        String buyer = replyRoom.getUser().getNickname();
+        ProductDTO productDTO =productService.getProductDetail(pno);
+        String writer = productDTO.getWriter();
+        PageResponseDTO<ReplyDTO> responseDTO = replyService.findByrid(rid,pageRequestDTO);
+        return responseDTO;
+    }
+
 }

@@ -7,6 +7,7 @@ import com.example.avocado.domain.ReplyRoom;
 import com.example.avocado.domain.User;
 import com.example.avocado.dto.PageRequestDTO;
 import com.example.avocado.dto.PageResponseDTO;
+import com.example.avocado.dto.product.AnswerReplyDTO;
 import com.example.avocado.dto.product.ReplyDTO;
 import com.example.avocado.repository.ProductRepository;
 import com.example.avocado.repository.ReplyRepository;
@@ -50,7 +51,7 @@ public class ReplyServiceImpl implements ReplyService {
             replyRoom = ReplyRoom.createReplyRoom(product, user);
             replyRoomRepository.save(replyRoom);
         }
-
+        reply.setWriter(product.getWriter());
         reply.setReplyRoom(replyRoom);
         Long rno = replyRepository.save(reply).getRno();
 
@@ -102,9 +103,28 @@ public class ReplyServiceImpl implements ReplyService {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSize(),
-                Sort.by("rno").descending());
+                Sort.by("rno").ascending());
 
         Page<Reply> result = replyRepository.findByPnoAndReplyer(pno, buyer, pageable);
+        List<ReplyDTO> dtoList = result.getContent().stream()
+                .map(reply -> modelMapper.map(reply, ReplyDTO.class))
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<ReplyDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int) result.getTotalElements())
+                .build();
+    }
+
+    @Override
+    public PageResponseDTO<ReplyDTO> findByPnoAndReplyerAndSeller(Long pno, String repleyr, String writer, PageRequestDTO pageRequestDTO) {
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getSize(),
+                Sort.by("rno").ascending());
+
+        Page<Reply> result = replyRepository.findByPnoAndReplyerOrwriter(pno, repleyr, writer, pageable);
         List<ReplyDTO> dtoList = result.getContent().stream()
                 .map(reply -> modelMapper.map(reply, ReplyDTO.class))
                 .collect(Collectors.toList());
@@ -122,6 +142,42 @@ public class ReplyServiceImpl implements ReplyService {
     public List<ReplyRoom> replyelist(Long pno){
         List<ReplyRoom> replyRooms = replyRoomRepository.findByPno(pno);
         return  replyRooms;
+
+    }
+
+
+
+    @Override
+    public Long registeranswer(AnswerReplyDTO answerReplyDTO) {
+        Reply reply = modelMapper.map(answerReplyDTO, Reply.class);
+        User user = userRepository.findByNickname(answerReplyDTO.getReplyer());
+        Product product = productRepository.findByPno(answerReplyDTO.getPno());
+        ReplyRoom replyRoom = replyRoomRepository.findById(answerReplyDTO.getRid()).get();
+
+        reply.setWriter(product.getWriter());
+        reply.setReplyRoom(replyRoom);
+        Long rno = replyRepository.save(reply).getRno();
+
+        return rno;
+    }
+
+ @Override
+    public PageResponseDTO<ReplyDTO> findByrid(Long rid, PageRequestDTO pageRequestDTO) {
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getSize(),
+                Sort.by("rno").ascending());
+
+        Page<Reply> result = replyRepository.findByRid(rid, pageable);
+        List<ReplyDTO> dtoList = result.getContent().stream()
+                .map(reply -> modelMapper.map(reply, ReplyDTO.class))
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<ReplyDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int) result.getTotalElements())
+                .build();
 
     }
 }

@@ -16,5 +16,12 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     @Query("SELECT r FROM Reply r WHERE r.replyRoom.product.pno =:pno and r.replyer=:buyer")
     Page<Reply> findByPnoAndReplyer(Long pno, String buyer, Pageable pageable);
 
+    @Query("SELECT r FROM Reply r WHERE r.replyRoom.product.pno =:pno and (r.replyer=:buyer or r.writer=:writer)")
+    Page<Reply>   findByPnoAndReplyerOrwriter(Long pno, String buyer, String writer, Pageable pageable);
+
+    @Query("SELECT r FROM Reply r WHERE r.replyRoom.rid =:rid")
+    Page<Reply>   findByRid(Long rid, Pageable pageable);
+
+
 
 }

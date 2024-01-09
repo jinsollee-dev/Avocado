@@ -15,6 +15,7 @@ import com.example.avocado.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,6 +37,7 @@ public class ProductController {
     private final ProductService productService;
     private final UserService userService;
     private final ReplyRoomRepository replyRoomRepository;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/register")
     public void register(User user, Model model,
@@ -71,6 +73,7 @@ public class ProductController {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         ProductDTO productDTO = productService.getProductDetail(pno);
+        UserResponseDTO userResponseDTO  = userService.findbyWriter(productDTO.getWriter());
 
 
         List<CartListDto> cartListDtos = cartService.getCartList(userDetails.getUsername());
@@ -82,7 +85,7 @@ public class ProductController {
                 model.addAttribute("cartitemId", cartitem.getCartItemId());
             }
         }
-
+        model.addAttribute("seller", userResponseDTO);
         model.addAttribute("cartList", cartListDtos);
         model.addAttribute("product", productDTO);
         return "product/view";
@@ -148,9 +151,11 @@ public class ProductController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         UserResponseDTO userResponseDTO = userService.findUser(userDetails.getUsername());
         ProductDTO productDTO = productService.getProductDetail(pno);
-        List<ProductImgDTO> imageList =  productDTO.getProductImgDtoList();
+        List<ProductImgDTO> imageList = productDTO.getProductImgDtoList();
         ProductImgDTO img1 = imageList.get(0);
-
+        String writer = productDTO.getWriter();
+        UserResponseDTO writerResponseDTO = userService.findbyWriter(writer);
+        model.addAttribute("seller", writerResponseDTO);
         model.addAttribute("buyer", userResponseDTO);
         model.addAttribute("product", productDTO);
         model.addAttribute("viewimg", img1);
@@ -167,24 +172,24 @@ public class ProductController {
 
 
     @GetMapping("/admin") //product controller
-    public String adminPage(Model model, Authentication authentication, Pageable pageable){
+    public String adminPage(Model model, Authentication authentication, Pageable pageable) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         UserResponseDTO userResponseDTO = productService.findUser(userDetails.getUsername());
         // User == Admin.Role 일 경우
-        if(userResponseDTO.getRole().equals("ADMIN")){
+        if (userResponseDTO.getRole().equals("ADMIN")) {
             List<ProductDTO> productList = productService.getList(pageable);
-            model.addAttribute("user",userResponseDTO);
-            model.addAttribute("productList",productList);
+            model.addAttribute("user", userResponseDTO);
+            model.addAttribute("productList", productList);
             return "product/adminPage";
-        }else{
+        } else {
             return "redirect:/";
         }
     }
 
 
     @PostMapping("/change/{id}") //usercontroller
-    public String userChange(@PathVariable Long id, User user){
-        userService.userUpdate(id,user);
+    public String userChange(@PathVariable Long id, User user) {
+        userService.userUpdate(id, user);
 
         return "/";
     }
@@ -192,8 +197,8 @@ public class ProductController {
 
     @GetMapping("/dealdone/{id}/{rid}")
     public String dealstatuschange(@PathVariable("id") Long id,
-                                            @PathVariable("rid") Long rid,
-                                            Authentication authentication){
+                                   @PathVariable("rid") Long rid,
+                                   Authentication authentication) {
 
         log.info("판매완료처리확인");
         log.info(id);  //구매자 id값
@@ -207,14 +212,45 @@ public class ProductController {
         log.info(pno);
 
         User user = userService.finduid(id);
-        String buyer= user.getNickname(); //구매자 nickname값으로 buyer에 넣어주기
+        String buyer = user.getNickname(); //구매자 nickname값으로 buyer에 넣어주기
         String seller = userResponseDTO.getNickname(); //판매자 nickname값으로 seller에 넣어주기
 
         Long dno = productService.updatedealstatus(pno, buyer, seller);
-       return "/replylist";
+        return "/replylist";
 
     }
 
+
+    @GetMapping("/answer/{id}/{rid}")
+    public String registeranswer(@PathVariable("id") Long id,
+                                 @PathVariable("rid") Long rid,
+                                 Authentication authentication,
+                                Model model) {
+
+        log.info("답글달기페이지가기");
+        log.info(id);  //구매자 id값
+        log.info(rid);     //댓글방 rid
+        ReplyRoom replyRoom = replyRoomRepository.findById(rid).get();
+        Long pno = replyRoom.getProduct().getPno();
+        log.info(pno);
+
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();  //판매자정보
+        UserResponseDTO writerResponseDTO = userService.findUser(userDetails.getUsername());
+        ProductDTO productDTO = productService.getProductDetail(pno);
+        List<ProductImgDTO> imageList = productDTO.getProductImgDtoList();
+        ProductImgDTO img1 = imageList.get(0);
+        User user = userService.finduid(id);
+        UserResponseDTO sellerUserResponseDTO = modelMapper.map(user, UserResponseDTO.class);
+
+        model.addAttribute("rid", rid);
+        model.addAttribute("seller", writerResponseDTO);
+        model.addAttribute("buyer", sellerUserResponseDTO);
+        model.addAttribute("product", productDTO);
+        model.addAttribute("viewimg", img1);
+        return "product/answer";
+
+    }
 }
 
 

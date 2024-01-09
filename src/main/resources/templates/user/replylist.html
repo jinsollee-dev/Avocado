@@ -52,14 +52,22 @@
                                                     <img class ="replyicon" src="/images/flat.png">
                                                     <div class="comment-info">
                                                     <input type="hidden" id="userid" name="userid" th:value="${replyrooms.getUser().getId()}">
-                                                        <div style="display: block;">
 
-                                                            <p><span style="font-weight: bold; color:black">⭐[[${replyrooms.getUser().getNickname()}]]⭐</span>님의 문의</p>
-                                                        </div>
-                                                        <p class="comment-author">
+                                                        <div style="display: block;">
+                                                            <p class="comment-author">
+                                                            <p><span style="font-weight: bold; color:black">⭐[[${replyrooms.getUser().getNickname()}]]⭐</span>님의 문의
+                                                            <div>
+                                                            <a th:href="@{/product/answer/{userId}/{replyId}(userId=${replyrooms.getUser().getId()}, replyId=${replyrooms.rid})}">
+                                                                답글달기
+                                                            </a>
+                                                             </div>
+                                                            </p>
+                                                            </p>
+                                                            <p class="comment-author">
                                                             <a th:href="@{/product/dealdone/{userId}/{replyId}(userId=${replyrooms.getUser().getId()}, replyId=${replyrooms.rid})}">
                                                                 <button type="button">판매확정</button></a>
-                                                        </p>
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
