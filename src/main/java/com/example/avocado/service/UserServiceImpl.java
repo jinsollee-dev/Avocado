@@ -149,13 +149,52 @@ public class UserServiceImpl implements UserService{
         return result;
     }
 
-    @Override
+   @Override
     public void update(String username, UserUpdateDTO userUpdateDTO) {
         User user = userRepository.findByUsername(username);
         user.setName(userUpdateDTO.getName());
         user.setNickname(userUpdateDTO.getNickname());
         user.setPassword(userUpdateDTO.getPassword());
         user.setPhone(userUpdateDTO.getPhone());
+
+
+        log.info("======파일테스트");
+        log.info(userUpdateDTO.getFile());
+
+        MultipartFile file = userUpdateDTO.getFile();
+        String filename = file.getOriginalFilename();
+        log.info(filename);
+
+        if (filename != ""){
+
+            UUID uuid = UUID.randomUUID();
+            String imageFileName = uuid + "_" + file.getOriginalFilename();
+
+            File destinationFile = new File(uploadFolder + imageFileName);
+
+            try {
+                file.transferTo(destinationFile);
+
+                UserImage image = imageRepository.findByUser(user);
+
+                if (image != null) {
+                    // 이미지가 이미 존재하면 url 업데이트
+                    image.updateUrl(imageFileName);
+                    imageRepository.save(image);
+
+                } else {
+                    // 이미지가 없으면 객체 생성 후 저장
+                    image = UserImage.builder()
+                            .user(user)
+                            .url(imageFileName)
+                            .build();
+                    imageRepository.save(image);
+
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         userRepository.save(user);
 
     }

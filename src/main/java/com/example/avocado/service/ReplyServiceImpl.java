@@ -117,6 +117,8 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
 
+
+
     public List<ReplyRoom> replyelist(Long pno){
         List<ReplyRoom> replyRooms = replyRoomRepository.findByPno(pno);
         return  replyRooms;
