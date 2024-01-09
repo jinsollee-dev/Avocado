@@ -94,7 +94,7 @@ public class UserController {
         Long userId = userService.join(userDTO);
         //user.setRole("USER");
         //repository.save(user);
-        return "redirect:/";
+        return "user/login";
     }
 
     //프로필 보기

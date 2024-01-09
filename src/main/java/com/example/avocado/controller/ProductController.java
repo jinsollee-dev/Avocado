@@ -216,7 +216,7 @@ public class ProductController {
         String seller = userResponseDTO.getNickname(); //판매자 nickname값으로 seller에 넣어주기
 
         Long dno = productService.updatedealstatus(pno, buyer, seller);
-        return "/replylist";
+        return "redirect:/user/replylist";
 
     }
 
