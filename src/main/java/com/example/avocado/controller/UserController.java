@@ -92,8 +92,6 @@ public class UserController {
 
         userDTO.setPassword(enPassword);
         Long userId = userService.join(userDTO);
-        //user.setRole("USER");
-        //repository.save(user);
         return "user/login";
     }
 

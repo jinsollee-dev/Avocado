@@ -18,7 +18,6 @@ public class ReplyRoom extends BaseEntity {
     @Column(name = "room_id")
     private Long rid;
 
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pno")
     private Product product;  //product_pno
@@ -28,11 +27,8 @@ public class ReplyRoom extends BaseEntity {
 
     public static ReplyRoom createReplyRoom(Product product, User user) {
         ReplyRoom replyRoom = new ReplyRoom();
-       replyRoom.setProduct(product);
-       replyRoom.setUser(user);
-       return replyRoom;
+        replyRoom.setProduct(product);
+        replyRoom.setUser(user);
+        return replyRoom;
     }
-
-
-
 }

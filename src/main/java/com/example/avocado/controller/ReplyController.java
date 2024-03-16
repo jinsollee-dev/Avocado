@@ -43,11 +43,11 @@ public class ReplyController {
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Long> register(@Valid @RequestBody ReplyDTO replyDTO,
-                                                      BindingResult bindingResult)
+                                    BindingResult bindingResult)
             throws BindException {
         log.info("댓글입력확인");
         log.info(replyDTO);
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
         Map<String, Long> resultMap = new HashMap<>();
@@ -60,19 +60,19 @@ public class ReplyController {
     //GET 선택 -> localhost:8086/replies/list/103
     @GetMapping("/list/{pno}")
     public PageResponseDTO<ReplyDTO> getList(@PathVariable("pno") Long pno,
-                                             PageRequestDTO pageRequestDTO,
-                                             Authentication authentication) {
+                                            PageRequestDTO pageRequestDTO,
+                                            Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         UserResponseDTO userResponseDTO = userService.findUser(userDetails.getUsername());
         String buyer = userResponseDTO.getNickname();
-        ProductDTO productDTO =productService.getProductDetail(pno);
+        ProductDTO productDTO = productService.getProductDetail(pno);
         String writer = productDTO.getWriter();
-        PageResponseDTO<ReplyDTO> responseDTO = replyService.findByPnoAndReplyerAndSeller(pno, buyer, writer,pageRequestDTO);
+        PageResponseDTO<ReplyDTO> responseDTO = replyService.findByPnoAndReplyerAndSeller(pno, buyer, writer, pageRequestDTO);
         return responseDTO;
     }
 
     @GetMapping("/{rno}")
-    public ReplyDTO getReplyDTO(@PathVariable("rno") Long rno){
+    public ReplyDTO getReplyDTO(@PathVariable("rno") Long rno) {
         log.info(rno);
         ReplyDTO replyDTO = replyService.read(rno);
         log.info(replyDTO);
@@ -80,7 +80,7 @@ public class ReplyController {
     }
 
     @PutMapping(value = "/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Long> modify(@PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO){
+    public Map<String, Long> modify(@PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO) {
         replyDTO.setRno(rno);
         replyService.modify(replyDTO);
         Map<String, Long> resultMap = new HashMap<>();
@@ -90,7 +90,7 @@ public class ReplyController {
 
 
     @DeleteMapping("/{rno}")
-    public Map<String, Long> remove(@PathVariable("rno") Long rno){
+    public Map<String, Long> remove(@PathVariable("rno") Long rno) {
         Map<String, Long> resultMap = new HashMap<>();
         resultMap.put("rno", rno);
         replyService.remove(rno);
@@ -98,14 +98,13 @@ public class ReplyController {
     }
 
 
-
     @PostMapping(value = "/answer", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Long> registeranswer(@Valid @RequestBody AnswerReplyDTO answerReplyDTO,
-                                      BindingResult bindingResult)
+                                            BindingResult bindingResult)
             throws BindException {
         log.info("답글입력확인");
         log.info(answerReplyDTO.getRid());
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
         Map<String, Long> resultMap = new HashMap<>();
@@ -117,16 +116,16 @@ public class ReplyController {
 
     @GetMapping("/answer/list/{pno}")
     public PageResponseDTO<ReplyDTO> anwsergetList(@PathVariable("pno") Long pno,
-                                             @RequestParam("rid") Long rid,
-                                             PageRequestDTO pageRequestDTO,
-                                             Authentication authentication) {
+                                                   @RequestParam("rid") Long rid,
+                                                   PageRequestDTO pageRequestDTO,
+                                                   Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         UserResponseDTO userResponseDTO = userService.findUser(userDetails.getUsername());
-        ReplyRoom replyRoom= replyRoomRepository.findById(rid).get();
+        ReplyRoom replyRoom = replyRoomRepository.findById(rid).get();
         String buyer = replyRoom.getUser().getNickname();
-        ProductDTO productDTO =productService.getProductDetail(pno);
+        ProductDTO productDTO = productService.getProductDetail(pno);
         String writer = productDTO.getWriter();
-        PageResponseDTO<ReplyDTO> responseDTO = replyService.findByrid(rid,pageRequestDTO);
+        PageResponseDTO<ReplyDTO> responseDTO = replyService.findByrid(rid, pageRequestDTO);
         return responseDTO;
     }
 
